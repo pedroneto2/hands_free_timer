@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hands_free_timer/l10n/app_localizations.dart';
 
 import '../notifiers/timer_notifier.dart';
 
@@ -56,7 +57,7 @@ class TimerControls extends StatelessWidget {
                 Icon(_centerButtonIcon(isGreen), size: 26),
                 const SizedBox(width: 8),
                 Text(
-                  _centerButtonLabel(isGreen),
+                  _centerButtonLabel(context, isGreen),
                   style: const TextStyle(
                       fontSize: 17, fontWeight: FontWeight.w600),
                 ),
@@ -94,11 +95,12 @@ class TimerControls extends StatelessWidget {
     return notifier.isRunning ? Icons.pause_rounded : Icons.play_arrow_rounded;
   }
 
-  String _centerButtonLabel(bool isGreen) {
-    if (isGreen) return notifier.soundActivated ? 'Clap to restart' : 'Restart';
+  String _centerButtonLabel(BuildContext context, bool isGreen) {
+    final l = AppLocalizations.of(context)!;
+    if (isGreen) return notifier.soundActivated ? l.btnClapToRestart : l.btnRestart;
     if (notifier.soundActivated) {
-      return notifier.isRunning ? 'Clap to pause' : 'Listening: clap to start';
+      return notifier.isRunning ? l.btnClapToPause : l.btnListeningClapToStart;
     }
-    return notifier.isRunning ? 'Pause' : 'Start';
+    return notifier.isRunning ? l.btnPause : l.btnStart;
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:hands_free_timer/l10n/app_localizations.dart';
 
 import '../notifiers/timer_notifier.dart';
 
@@ -13,6 +14,16 @@ class TimerDisplay extends StatelessWidget {
     required this.pulseAnimation,
     super.key,
   });
+
+  String _statusText(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return switch (notifier.status) {
+      TimerStatus.completed => l.statusDone,
+      TimerStatus.running   => l.statusRunning,
+      TimerStatus.ready     => l.statusReady,
+      TimerStatus.paused    => l.statusPaused,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +68,7 @@ class TimerDisplay extends StatelessWidget {
                   ),
                 const SizedBox(height: 4),
                 Text(
-                  notifier.statusLabel,
+                  _statusText(context),
                   style: TextStyle(
                     fontSize: 13,
                     letterSpacing: 1.8,

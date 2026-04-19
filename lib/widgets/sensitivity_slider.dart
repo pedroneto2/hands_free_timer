@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hands_free_timer/l10n/app_localizations.dart';
 
 import '../notifiers/timer_notifier.dart';
 
@@ -10,13 +11,14 @@ class SensitivitySlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final l = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(32, 20, 32, 0),
       child: Column(
         children: [
           Text(
-            'MIC SENSITIVITY',
+            l.micSensitivity,
             style: TextStyle(
               fontSize: 11,
               letterSpacing: 2,
@@ -27,7 +29,7 @@ class SensitivitySlider extends StatelessWidget {
           const SizedBox(height: 4),
           Row(
             children: [
-              Text('Low',
+              Text(l.sensitivityLow,
                   style:
                       TextStyle(fontSize: 11, color: cs.onSurfaceVariant)),
               Expanded(
@@ -45,7 +47,7 @@ class SensitivitySlider extends StatelessWidget {
                   ),
                 ),
               ),
-              Text('High',
+              Text(l.sensitivityHigh,
                   style:
                       TextStyle(fontSize: 11, color: cs.onSurfaceVariant)),
             ],

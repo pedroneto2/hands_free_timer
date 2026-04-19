@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import '../services/sound_detector.dart';
 import '../services/sound_player.dart';
 
+enum TimerStatus { ready, running, paused, completed }
+
 class TimerNotifier extends ChangeNotifier {
   static const List<int> presets = [1, 5, 10, 15, 30];
 
@@ -46,10 +48,12 @@ class TimerNotifier extends ChangeNotifier {
     return '${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}';
   }
 
-  String get statusLabel {
-    if (_isCompleted) return 'Done!';
-    if (_isRunning) return 'Running';
-    return _remainingSeconds == _totalSeconds ? 'Ready' : 'Paused';
+  TimerStatus get status {
+    if (_isCompleted) return TimerStatus.completed;
+    if (_isRunning) return TimerStatus.running;
+    return _remainingSeconds == _totalSeconds
+        ? TimerStatus.ready
+        : TimerStatus.paused;
   }
 
   void selectPreset(int minutes) {

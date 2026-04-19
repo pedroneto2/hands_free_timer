@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hands_free_timer/l10n/app_localizations.dart';
 
 import '../notifiers/timer_notifier.dart';
 
@@ -11,6 +12,7 @@ class TimerPresets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final l = AppLocalizations.of(context)!;
     final isCustom = !TimerNotifier.presets.contains(notifier.selectedPreset);
 
     Widget chip({
@@ -57,7 +59,7 @@ class TimerPresets extends StatelessWidget {
         chip(
           selected: isCustom && !notifier.isRunning && !notifier.isCompleted,
           onTap: () {
-            if (!notifier.isRunning) _showCustomTimeDialog(context, cs);
+            if (!notifier.isRunning) _showCustomTimeDialog(context, cs, l);
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -69,9 +71,9 @@ class TimerPresets extends StatelessWidget {
               Text(
                 isCustom
                     ? (notifier.customSeconds != null
-                        ? '${notifier.customSeconds}s'
-                        : '${notifier.selectedPreset}m')
-                    : 'Custom',
+                        ? '${notifier.customSeconds}${l.unitSec}'
+                        : '${notifier.selectedPreset}${l.unitMin}')
+                    : l.presetCustom,
                 style: TextStyle(
                   color:
                       (isCustom && !notifier.isRunning && !notifier.isCompleted)
@@ -88,7 +90,8 @@ class TimerPresets extends StatelessWidget {
     );
   }
 
-  void _showCustomTimeDialog(BuildContext context, ColorScheme cs) {
+  void _showCustomTimeDialog(
+      BuildContext context, ColorScheme cs, AppLocalizations l) {
     final isCurrentlyCustom =
         !TimerNotifier.presets.contains(notifier.selectedPreset);
     final startInSeconds = notifier.customSeconds != null;
@@ -115,7 +118,7 @@ class TimerPresets extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'CUSTOM DURATION',
+                  l.dialogCustomDuration,
                   style: TextStyle(
                     fontSize: 11,
                     letterSpacing: 2,
@@ -148,7 +151,7 @@ class TimerPresets extends StatelessWidget {
                       onTap: () =>
                           setDialogState(() => isSeconds = !isSeconds),
                       child: Text(
-                        isSeconds ? 'sec' : 'min',
+                        isSeconds ? l.unitSec : l.unitMin,
                         style: TextStyle(
                           color: cs.primary,
                           fontSize: 16,
@@ -170,7 +173,7 @@ class TimerPresets extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(ctx),
-                child: Text('Cancel',
+                child: Text(l.dialogCancel,
                     style: TextStyle(color: cs.onSurfaceVariant)),
               ),
               FilledButton(
@@ -180,7 +183,7 @@ class TimerPresets extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text('Set'),
+                child: Text(l.dialogSet),
               ),
             ],
           ),

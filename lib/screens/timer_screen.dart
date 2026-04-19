@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:hands_free_timer/l10n/app_localizations.dart';
+
 import '../notifiers/timer_notifier.dart';
+import '../widgets/language_selector.dart';
 import '../widgets/sensitivity_slider.dart';
 import '../widgets/timer_controls.dart';
 import '../widgets/timer_display.dart';
@@ -78,12 +81,19 @@ class _TimerScreenState extends State<TimerScreen>
           elevation: 0,
           centerTitle: true,
           title: Text(
-            'Hands Free Timer',
+            AppLocalizations.of(context)!.appTitle,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: cs.onSurface,
                 ),
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.language_rounded),
+              onPressed: () => showLanguageSelector(context),
+              color: cs.onSurfaceVariant,
+            ),
+          ],
         ),
         body: SafeArea(
           child: Column(
