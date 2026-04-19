@@ -14,7 +14,7 @@ class TimerScreen extends StatefulWidget {
 }
 
 class _TimerScreenState extends State<TimerScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late final TimerNotifier _notifier;
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
@@ -31,6 +31,7 @@ class _TimerScreenState extends State<TimerScreen>
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
     _notifier.addListener(_syncAnimation);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   void _syncAnimation() {
@@ -44,7 +45,20 @@ class _TimerScreenState extends State<TimerScreen>
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.hidden ||
+        state == AppLifecycleState.paused) {
+      // Window hidden or screen off — stop animation to save CPU/GPU.
+      _pulseController.stop();
+    } else if (state == AppLifecycleState.resumed) {
+      // Window visible again — restore animation if needed.
+      _syncAnimation();
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _notifier.removeListener(_syncAnimation);
     _notifier.dispose();
     _pulseController.dispose();

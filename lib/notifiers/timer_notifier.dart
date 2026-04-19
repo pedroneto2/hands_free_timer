@@ -1,12 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../services/sound_detector.dart';
 import '../services/sound_player.dart';
-
 
 class TimerNotifier extends ChangeNotifier {
   static const List<int> presets = [1, 5, 10, 15, 30];
@@ -14,18 +13,14 @@ class TimerNotifier extends ChangeNotifier {
   int _selectedPreset = 10;
   int _totalSeconds = 10 * 60;
   int _remainingSeconds = 10 * 60;
-  int? _customSeconds; // non-null when duration was set in seconds
+  int? _customSeconds;
   Timer? _timer;
   bool _isRunning = false;
   bool _isCompleted = false;
   bool _soundActivated = false;
-  double _sensitivity = 0.8; // 0.0 = low (needs loud sound) → 1.0 = high (quiet sound triggers)
+  double _sensitivity = 0.8;
 
   final SoundDetector _detector = SoundDetector();
-
-  // D-Bus is unavailable in WSL2, so wakelock calls fail silently.
-  void _enableWakelock() => WakelockPlus.enable().catchError((_) {});
-  void _disableWakelock() => WakelockPlus.disable().catchError((_) {});
 
   int get selectedPreset => _selectedPreset;
   int? get customSeconds => _customSeconds;
@@ -34,7 +29,6 @@ class TimerNotifier extends ChangeNotifier {
   bool get soundActivated => _soundActivated;
   double get sensitivity => _sensitivity;
 
-  // Maps sensitivity slider to RMS threshold (inversely: more sensitive = lower threshold).
   double get _rmsThreshold => 0.20 - 0.19 * _sensitivity;
 
   void setSensitivity(double value) {
@@ -71,7 +65,7 @@ class TimerNotifier extends ChangeNotifier {
   void selectBySeconds(int seconds) {
     if (_isRunning) return;
     _customSeconds = seconds;
-    _selectedPreset = -1; // sentinel: signals "custom seconds" to the UI
+    _selectedPreset = -1;
     _totalSeconds = seconds;
     _remainingSeconds = seconds;
     _isCompleted = false;
@@ -87,7 +81,8 @@ class TimerNotifier extends ChangeNotifier {
   }
 
   void _start() {
-    _enableWakelock();
+    // No wakelock — we intentionally let the screen sleep to save battery.
+    // The timer continues running in the background accurately.
     _isRunning = true;
     notifyListeners();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -102,14 +97,12 @@ class TimerNotifier extends ChangeNotifier {
 
   void pause() {
     _timer?.cancel();
-    _disableWakelock();
     _isRunning = false;
     notifyListeners();
   }
 
   void reset() {
     _timer?.cancel();
-    _disableWakelock();
     _isRunning = false;
     _isCompleted = false;
     _remainingSeconds = _totalSeconds;
@@ -118,7 +111,7 @@ class TimerNotifier extends ChangeNotifier {
 
   void _onComplete() {
     _timer?.cancel();
-    _disableWakelock();
+    _wakeScreen();
     SoundPlayer.playCompletionAlert();
     HapticFeedback.heavyImpact();
     Future.delayed(const Duration(milliseconds: 300), HapticFeedback.heavyImpact);
@@ -127,6 +120,12 @@ class TimerNotifier extends ChangeNotifier {
     _isCompleted = true;
     _remainingSeconds = 0;
     notifyListeners();
+  }
+
+  // Wakes the display via X11/XWayland DPMS commands (works on Linux + WSLg).
+  void _wakeScreen() {
+    Process.run('xset', ['s', 'reset']);
+    Process.run('xset', ['dpms', 'force', 'on']);
   }
 
   Future<void> toggleSoundActivation() async {
@@ -144,7 +143,6 @@ class TimerNotifier extends ChangeNotifier {
   @override
   void dispose() {
     _timer?.cancel();
-    _disableWakelock();
     _detector.dispose();
     super.dispose();
   }
