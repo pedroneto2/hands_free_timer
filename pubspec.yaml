@@ -1,5 +1,5 @@
-name: vocal_timer
-description: "A simple, beautiful countdown timer app."
+name: hands_free_timer
+description: "A simple, beautiful countdown timer app controlled with voice."
 publish_to: 'none'
 
 # The following defines the version and build number for your application.

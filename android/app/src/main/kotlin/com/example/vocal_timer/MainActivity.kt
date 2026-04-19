@@ -1,4 +1,4 @@
-package com.example.vocal_timer
+package com.example.hands_free_timer
 
 import io.flutter.embedding.android.FlutterActivity
 

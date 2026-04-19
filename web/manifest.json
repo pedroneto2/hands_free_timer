@@ -1,6 +1,6 @@
 {
-    "name": "vocal_timer",
-    "short_name": "vocal_timer",
+    "name": "hands_free_timer",
+    "short_name": "hands_free_timer",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

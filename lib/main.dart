@@ -5,11 +5,11 @@ import 'screens/timer_screen.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const VocalTimerApp());
+  runApp(const HandsFreeTimerApp());
 }
 
-class VocalTimerApp extends StatelessWidget {
-  const VocalTimerApp({super.key});
+class HandsFreeTimerApp extends StatelessWidget {
+  const HandsFreeTimerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
