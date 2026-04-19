@@ -1,0 +1,151 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
+
+import '../services/sound_detector.dart';
+import '../services/sound_player.dart';
+
+
+class TimerNotifier extends ChangeNotifier {
+  static const List<int> presets = [1, 5, 10, 15, 30];
+
+  int _selectedPreset = 10;
+  int _totalSeconds = 10 * 60;
+  int _remainingSeconds = 10 * 60;
+  int? _customSeconds; // non-null when duration was set in seconds
+  Timer? _timer;
+  bool _isRunning = false;
+  bool _isCompleted = false;
+  bool _soundActivated = false;
+  double _sensitivity = 0.8; // 0.0 = low (needs loud sound) → 1.0 = high (quiet sound triggers)
+
+  final SoundDetector _detector = SoundDetector();
+
+  // D-Bus is unavailable in WSL2, so wakelock calls fail silently.
+  void _enableWakelock() => WakelockPlus.enable().catchError((_) {});
+  void _disableWakelock() => WakelockPlus.disable().catchError((_) {});
+
+  int get selectedPreset => _selectedPreset;
+  int? get customSeconds => _customSeconds;
+  bool get isRunning => _isRunning;
+  bool get isCompleted => _isCompleted;
+  bool get soundActivated => _soundActivated;
+  double get sensitivity => _sensitivity;
+
+  // Maps sensitivity slider to RMS threshold (inversely: more sensitive = lower threshold).
+  double get _rmsThreshold => 0.20 - 0.19 * _sensitivity;
+
+  void setSensitivity(double value) {
+    _sensitivity = value.clamp(0.0, 1.0);
+    _detector.threshold = _rmsThreshold;
+    notifyListeners();
+  }
+
+  double get progress =>
+      _totalSeconds == 0 ? 0 : 1.0 - (_remainingSeconds / _totalSeconds);
+
+  String get timeDisplay {
+    final m = _remainingSeconds ~/ 60;
+    final s = _remainingSeconds % 60;
+    return '${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}';
+  }
+
+  String get statusLabel {
+    if (_isCompleted) return 'Done!';
+    if (_isRunning) return 'Running';
+    return _remainingSeconds == _totalSeconds ? 'Ready' : 'Paused';
+  }
+
+  void selectPreset(int minutes) {
+    if (_isRunning) return;
+    _customSeconds = null;
+    _selectedPreset = minutes;
+    _totalSeconds = minutes * 60;
+    _remainingSeconds = minutes * 60;
+    _isCompleted = false;
+    notifyListeners();
+  }
+
+  void selectBySeconds(int seconds) {
+    if (_isRunning) return;
+    _customSeconds = seconds;
+    _selectedPreset = -1; // sentinel: signals "custom seconds" to the UI
+    _totalSeconds = seconds;
+    _remainingSeconds = seconds;
+    _isCompleted = false;
+    notifyListeners();
+  }
+
+  void startPause() {
+    if (_isCompleted) {
+      reset();
+      return;
+    }
+    _isRunning ? pause() : _start();
+  }
+
+  void _start() {
+    _enableWakelock();
+    _isRunning = true;
+    notifyListeners();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (_remainingSeconds <= 0) {
+        _onComplete();
+        return;
+      }
+      _remainingSeconds--;
+      notifyListeners();
+    });
+  }
+
+  void pause() {
+    _timer?.cancel();
+    _disableWakelock();
+    _isRunning = false;
+    notifyListeners();
+  }
+
+  void reset() {
+    _timer?.cancel();
+    _disableWakelock();
+    _isRunning = false;
+    _isCompleted = false;
+    _remainingSeconds = _totalSeconds;
+    notifyListeners();
+  }
+
+  void _onComplete() {
+    _timer?.cancel();
+    _disableWakelock();
+    SoundPlayer.playCompletionAlert();
+    HapticFeedback.heavyImpact();
+    Future.delayed(const Duration(milliseconds: 300), HapticFeedback.heavyImpact);
+    Future.delayed(const Duration(milliseconds: 600), HapticFeedback.heavyImpact);
+    _isRunning = false;
+    _isCompleted = true;
+    _remainingSeconds = 0;
+    notifyListeners();
+  }
+
+  Future<void> toggleSoundActivation() async {
+    if (_soundActivated) {
+      await _detector.stop();
+      _soundActivated = false;
+    } else {
+      _soundActivated = true;
+      _detector.threshold = _rmsThreshold;
+      await _detector.start(startPause);
+    }
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _disableWakelock();
+    _detector.dispose();
+    super.dispose();
+  }
+}
