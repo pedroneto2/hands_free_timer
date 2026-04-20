@@ -8,7 +8,7 @@ plugins {
 }
 
 val keyProperties = Properties().also { props ->
-    val keyPropertiesFile = rootProject.file("app/key.properties")
+    val keyPropertiesFile = rootProject.file("key.properties")
     if (keyPropertiesFile.exists()) props.load(keyPropertiesFile.inputStream())
 }
 
