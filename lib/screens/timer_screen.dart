@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:hands_free_timer/l10n/app_localizations.dart';
 
+import '../main.dart' show timerNotifier;
 import '../notifiers/timer_notifier.dart';
+import '../widgets/banner_ad_widget.dart';
 import '../widgets/language_selector.dart';
 import '../widgets/sensitivity_slider.dart';
 import '../widgets/timer_controls.dart';
@@ -25,7 +27,7 @@ class _TimerScreenState extends State<TimerScreen>
   @override
   void initState() {
     super.initState();
-    _notifier = TimerNotifier();
+    _notifier = timerNotifier;
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 900),
@@ -63,7 +65,6 @@ class _TimerScreenState extends State<TimerScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _notifier.removeListener(_syncAnimation);
-    _notifier.dispose();
     _pulseController.dispose();
     super.dispose();
   }
@@ -94,6 +95,9 @@ class _TimerScreenState extends State<TimerScreen>
               color: cs.onSurfaceVariant,
             ),
           ],
+        ),
+        bottomNavigationBar: const SafeArea(
+          child: BannerAdWidget(),
         ),
         body: SafeArea(
           child: Column(
