@@ -1,13 +1,33 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hands_free_timer/l10n/app_localizations.dart';
+
+import 'notifiers/timer_notifier.dart';
 import 'screens/timer_screen.dart';
+import 'services/app_open_ad_manager.dart';
 
-// Global locale notifier — changed by the language selector in the app bar.
 final localeNotifier = ValueNotifier<Locale>(const Locale('en'));
+final timerNotifier = TimerNotifier();
+final navigatorKey = GlobalKey<NavigatorState>();
+AppOpenAdManager? appOpenAdManager;
 
-void main() {
+bool get isMobilePlatform =>
+    !kIsWeb && (Platform.isAndroid || Platform.isIOS);
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if (isMobilePlatform) {
+    await MobileAds.instance.initialize();
+    appOpenAdManager = AppOpenAdManager(
+      timerNotifier: timerNotifier,
+      navigatorKey: navigatorKey,
+    );
+    appOpenAdManager!.initialize();
+  }
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const HandsFreeTimerApp());
 }
@@ -19,7 +39,8 @@ class HandsFreeTimerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<Locale>(
       valueListenable: localeNotifier,
-      builder: (_, locale, __) => MaterialApp(
+      builder: (context, locale, child) => MaterialApp(
+        navigatorKey: navigatorKey,
         locale: locale,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
