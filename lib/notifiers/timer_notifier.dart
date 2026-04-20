@@ -126,10 +126,14 @@ class TimerNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Wakes the display via X11/XWayland DPMS commands (works on Linux + WSLg).
+  // Wakes the display via X11/XWayland DPMS commands (Linux/WSLg only).
   void _wakeScreen() {
-    Process.run('xset', ['s', 'reset']);
-    Process.run('xset', ['dpms', 'force', 'on']);
+    if (!Platform.isLinux) return;
+    Future<void> run(List<String> args) async {
+      try { await Process.run('xset', args); } catch (_) {}
+    }
+    run(['s', 'reset']);
+    run(['dpms', 'force', 'on']);
   }
 
   Future<void> toggleSoundActivation() async {
