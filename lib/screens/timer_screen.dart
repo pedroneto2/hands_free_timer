@@ -77,6 +77,7 @@ class _TimerScreenState extends State<TimerScreen>
     return ListenableBuilder(
       listenable: _notifier,
       builder: (context, _) => Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: cs.surface,
         appBar: AppBar(
           backgroundColor: Colors.transparent,

@@ -107,6 +107,45 @@ class TimerPresets extends StatelessWidget {
       context: context,
       builder: (ctx) {
         bool isSeconds = startInSeconds;
+
+        Widget unitToggle(ColorScheme cs) {
+          Widget option(String label, bool selected) => AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: selected ? cs.primary : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    color: selected ? cs.onPrimary : cs.onSurfaceVariant,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              );
+
+          return GestureDetector(
+            onTap: () => setDialogState(() => isSeconds = !isSeconds),
+            child: Container(
+              decoration: BoxDecoration(
+                color: cs.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              padding: const EdgeInsets.all(3),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  option(l.unitMin, !isSeconds),
+                  option(l.unitSec, isSeconds),
+                ],
+              ),
+            ),
+          );
+        }
+
         return StatefulBuilder(
           builder: (ctx, setDialogState) => AlertDialog(
             shape: RoundedRectangleBorder(
@@ -147,19 +186,7 @@ class TimerPresets extends StatelessWidget {
                       fontWeight: FontWeight.w200,
                       letterSpacing: 2,
                     ),
-                    suffix: GestureDetector(
-                      onTap: () =>
-                          setDialogState(() => isSeconds = !isSeconds),
-                      child: Text(
-                        isSeconds ? l.unitSec : l.unitMin,
-                        style: TextStyle(
-                          color: cs.primary,
-                          fontSize: 16,
-                          decoration: TextDecoration.underline,
-                          decorationColor: cs.primary,
-                        ),
-                      ),
-                    ),
+                    suffix: unitToggle(cs),
                   ),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
