@@ -26,14 +26,14 @@ class TimerControls extends StatelessWidget {
         IconButton.outlined(
           onPressed: notifier.reset,
           icon: const Icon(Icons.refresh_rounded),
-          iconSize: 26,
+          iconSize: 22,
           style: IconButton.styleFrom(
             foregroundColor: cs.onSurfaceVariant,
             side: BorderSide(color: cs.outlineVariant),
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(12),
           ),
         ),
-        const SizedBox(width: 24),
+        const SizedBox(width: 20),
         Flexible(
           child: AnimatedBuilder(
           animation: pulseAnimation,
@@ -45,9 +45,9 @@ class TimerControls extends StatelessWidget {
             onPressed: notifier.startPause,
             style: FilledButton.styleFrom(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32),
+                borderRadius: BorderRadius.circular(28),
               ),
               backgroundColor: isGreen ? Colors.greenAccent : cs.primary,
               foregroundColor: isGreen ? Colors.black : cs.onPrimary,
@@ -55,13 +55,13 @@ class TimerControls extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(_centerButtonIcon(isGreen), size: 26),
+                Icon(_centerButtonIcon(isGreen), size: 22),
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
                     _centerButtonLabel(context, isGreen),
                     style: const TextStyle(
-                        fontSize: 17, fontWeight: FontWeight.w600),
+                        fontSize: 15, fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -70,13 +70,13 @@ class TimerControls extends StatelessWidget {
           ),
         ),
         ),
-        const SizedBox(width: 24),
+        const SizedBox(width: 20),
         IconButton.outlined(
           onPressed: () => notifier.toggleSoundActivation(),
           icon: Icon(
             notifier.soundActivated ? Icons.mic : Icons.mic_off_rounded,
           ),
-          iconSize: 26,
+          iconSize: 22,
           style: IconButton.styleFrom(
             foregroundColor:
                 notifier.soundActivated ? cs.primary : cs.onSurfaceVariant,
@@ -87,7 +87,7 @@ class TimerControls extends StatelessWidget {
             backgroundColor: notifier.soundActivated
                 ? cs.primary.withValues(alpha: 0.12)
                 : null,
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(12),
           ),
         ),
       ],

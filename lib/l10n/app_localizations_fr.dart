@@ -24,16 +24,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get statusPaused => 'En pause';
 
   @override
-  String get btnClapToRestart => 'Applaudir pour recommencer';
+  String get btnClapToRestart => 'Son pour recommencer';
 
   @override
   String get btnRestart => 'Recommencer';
 
   @override
-  String get btnClapToPause => 'Applaudir pour pause';
+  String get btnClapToPause => 'Son pour pause';
 
   @override
-  String get btnListeningClapToStart => 'À l\'écoute : applaudir pour démarrer';
+  String get btnListeningClapToStart => 'À l\'écoute : son pour démarrer';
 
   @override
   String get btnPause => 'Pause';

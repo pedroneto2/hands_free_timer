@@ -1,23 +1,37 @@
 package com.hands_free_timer.app
 
+import android.content.Context
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Handler
 import android.os.Looper
+import android.os.PowerManager
 import io.flutter.plugin.common.EventChannel
 
-class AudioStreamChannel(channel: EventChannel) : EventChannel.StreamHandler {
+class AudioStreamChannel(
+    channel: EventChannel,
+    private val context: Context,
+) : EventChannel.StreamHandler {
     private var audioRecord: AudioRecord? = null
     private var recordingThread: Thread? = null
     private var isRecording = false
     private val mainHandler = Handler(Looper.getMainLooper())
+    private var cpuWakeLock: PowerManager.WakeLock? = null
 
     init {
         channel.setStreamHandler(this)
     }
 
     override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+        // Keep CPU alive while screen is off so audio detection keeps running.
+        val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        @Suppress("WakelockTimeout")
+        cpuWakeLock = pm.newWakeLock(
+            PowerManager.PARTIAL_WAKE_LOCK,
+            "hands_free_timer::audio_detect",
+        ).also { it.acquire() }
+
         val sampleRate = 16000
         val minBuffer = AudioRecord.getMinBufferSize(
             sampleRate,
@@ -35,6 +49,8 @@ class AudioStreamChannel(channel: EventChannel) : EventChannel.StreamHandler {
         )
 
         if (audioRecord!!.state != AudioRecord.STATE_INITIALIZED) {
+            cpuWakeLock?.release()
+            cpuWakeLock = null
             events?.error("AUDIO_INIT_FAILED", "AudioRecord could not be initialized", null)
             return
         }
@@ -63,5 +79,7 @@ class AudioStreamChannel(channel: EventChannel) : EventChannel.StreamHandler {
         }
         audioRecord?.release()
         audioRecord = null
+        cpuWakeLock?.release()
+        cpuWakeLock = null
     }
 }

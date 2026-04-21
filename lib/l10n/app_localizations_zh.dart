@@ -24,16 +24,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get statusPaused => '已暂停';
 
   @override
-  String get btnClapToRestart => '拍手重新开始';
+  String get btnClapToRestart => '声音重新开始';
 
   @override
   String get btnRestart => '重新开始';
 
   @override
-  String get btnClapToPause => '拍手暂停';
+  String get btnClapToPause => '声音暂停';
 
   @override
-  String get btnListeningClapToStart => '聆听：拍手开始';
+  String get btnListeningClapToStart => '聆听：声音开始';
 
   @override
   String get btnPause => '暂停';

@@ -24,16 +24,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get statusPaused => 'Pausado';
 
   @override
-  String get btnClapToRestart => 'Palma para reiniciar';
+  String get btnClapToRestart => 'Som para reiniciar';
 
   @override
   String get btnRestart => 'Reiniciar';
 
   @override
-  String get btnClapToPause => 'Palma para pausar';
+  String get btnClapToPause => 'Som para pausar';
 
   @override
-  String get btnListeningClapToStart => 'Ouvindo: palma para iniciar';
+  String get btnListeningClapToStart => 'Ouvindo: som para iniciar';
 
   @override
   String get btnPause => 'Pausar';
@@ -92,16 +92,16 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get statusPaused => 'Pausado';
 
   @override
-  String get btnClapToRestart => 'Palma para reiniciar';
+  String get btnClapToRestart => 'Som para reiniciar';
 
   @override
   String get btnRestart => 'Reiniciar';
 
   @override
-  String get btnClapToPause => 'Palma para pausar';
+  String get btnClapToPause => 'Som para pausar';
 
   @override
-  String get btnListeningClapToStart => 'Ouvindo: palma para iniciar';
+  String get btnListeningClapToStart => 'Ouvindo: som para iniciar';
 
   @override
   String get btnPause => 'Pausar';

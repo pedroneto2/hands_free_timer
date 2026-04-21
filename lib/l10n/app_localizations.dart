@@ -148,7 +148,7 @@ abstract class AppLocalizations {
   /// No description provided for @btnClapToRestart.
   ///
   /// In en, this message translates to:
-  /// **'Clap to restart'**
+  /// **'Sound to restart'**
   String get btnClapToRestart;
 
   /// No description provided for @btnRestart.
@@ -160,13 +160,13 @@ abstract class AppLocalizations {
   /// No description provided for @btnClapToPause.
   ///
   /// In en, this message translates to:
-  /// **'Clap to pause'**
+  /// **'Sound to pause'**
   String get btnClapToPause;
 
   /// No description provided for @btnListeningClapToStart.
   ///
   /// In en, this message translates to:
-  /// **'Listening: clap to start'**
+  /// **'Listening: sound to start'**
   String get btnListeningClapToStart;
 
   /// No description provided for @btnPause.

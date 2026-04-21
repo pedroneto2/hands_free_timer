@@ -36,13 +36,13 @@ class TimerDisplay extends StatelessWidget {
         child: child,
       ),
       child: SizedBox(
-        width: 264,
-        height: 264,
+        width: 210,
+        height: 210,
         child: Stack(
           alignment: Alignment.center,
           children: [
             CustomPaint(
-              size: const Size(264, 264),
+              size: const Size(210, 210),
               painter: _CircularTimerPainter(
                 progress: notifier.progress,
                 trackColor: cs.surfaceContainerHighest,
@@ -55,12 +55,12 @@ class TimerDisplay extends StatelessWidget {
               children: [
                 if (notifier.isCompleted)
                   const Icon(Icons.check_circle_rounded,
-                      color: Colors.greenAccent, size: 52)
+                      color: Colors.greenAccent, size: 40)
                 else
                   Text(
                     notifier.timeDisplay,
                     style: TextStyle(
-                      fontSize: 56,
+                      fontSize: 44,
                       fontWeight: FontWeight.w200,
                       color: cs.onSurface,
                       letterSpacing: 2,

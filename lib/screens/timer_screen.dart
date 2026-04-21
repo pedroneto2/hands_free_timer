@@ -7,6 +7,7 @@ import '../notifiers/timer_notifier.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/language_selector.dart';
 import '../widgets/sensitivity_slider.dart';
+import '../widgets/sound_mode_selector.dart';
 import '../widgets/timer_controls.dart';
 import '../widgets/timer_display.dart';
 import '../widgets/timer_presets.dart';
@@ -102,15 +103,17 @@ class _TimerScreenState extends State<TimerScreen>
         body: SafeArea(
           child: Column(
             children: [
-              const Spacer(),
+              const Spacer(flex: 2),
               TimerDisplay(notifier: _notifier, pulseAnimation: _pulseAnimation),
-              const SizedBox(height: 44),
+              const SizedBox(height: 28),
               TimerPresets(notifier: _notifier),
-              const SizedBox(height: 44),
+              const SizedBox(height: 28),
               TimerControls(notifier: _notifier, pulseAnimation: _pulseAnimation),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               SensitivitySlider(notifier: _notifier),
-              const Spacer(),
+              const SizedBox(height: 14),
+              SoundModeSelector(notifier: _notifier),
+              const Spacer(flex: 1),
             ],
           ),
         ),

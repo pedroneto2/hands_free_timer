@@ -24,16 +24,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get statusPaused => 'روکا ہوا';
 
   @override
-  String get btnClapToRestart => 'دوبارہ شروع کرنے کے لیے تالی';
+  String get btnClapToRestart => 'دوبارہ شروع کرنے کے لیے آواز';
 
   @override
   String get btnRestart => 'دوبارہ شروع';
 
   @override
-  String get btnClapToPause => 'روکنے کے لیے تالی';
+  String get btnClapToPause => 'روکنے کے لیے آواز';
 
   @override
-  String get btnListeningClapToStart => 'سن رہا ہے: شروع کرنے کے لیے تالی';
+  String get btnListeningClapToStart => 'سن رہا ہے: شروع کرنے کے لیے آواز';
 
   @override
   String get btnPause => 'روکیں';

@@ -7,7 +7,7 @@ Clap or make any sound to start, pause, and restart the timer. Built with Flutte
 
 ## Features
 
-- **Hands-free control** — clap or speak to start/pause the countdown
+- **Hands-free control** — Make a sound to start/pause the countdown
 - **Adjustable mic sensitivity** — fine-tune the detection threshold with a slider
 - **Preset durations** — quick-select 1 m, 5 m, 10 m, 15 m, 30 m
 - **Custom duration** — enter any value in minutes or seconds

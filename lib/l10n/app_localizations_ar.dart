@@ -24,16 +24,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get statusPaused => 'متوقف مؤقتاً';
 
   @override
-  String get btnClapToRestart => 'صفّق لإعادة البدء';
+  String get btnClapToRestart => 'صوت لإعادة البدء';
 
   @override
   String get btnRestart => 'إعادة البدء';
 
   @override
-  String get btnClapToPause => 'صفّق للإيقاف المؤقت';
+  String get btnClapToPause => 'صوت للإيقاف المؤقت';
 
   @override
-  String get btnListeningClapToStart => 'يستمع: صفّق للبدء';
+  String get btnListeningClapToStart => 'يستمع: صوت للبدء';
 
   @override
   String get btnPause => 'إيقاف مؤقت';

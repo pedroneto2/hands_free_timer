@@ -24,16 +24,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get statusPaused => 'Dijeda';
 
   @override
-  String get btnClapToRestart => 'Tepuk untuk mulai ulang';
+  String get btnClapToRestart => 'Suara untuk mulai ulang';
 
   @override
   String get btnRestart => 'Mulai ulang';
 
   @override
-  String get btnClapToPause => 'Tepuk untuk jeda';
+  String get btnClapToPause => 'Suara untuk jeda';
 
   @override
-  String get btnListeningClapToStart => 'Mendengarkan: tepuk untuk mulai';
+  String get btnListeningClapToStart => 'Mendengarkan: suara untuk mulai';
 
   @override
   String get btnPause => 'Jeda';

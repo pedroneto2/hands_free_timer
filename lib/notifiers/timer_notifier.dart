@@ -22,6 +22,7 @@ class TimerNotifier extends ChangeNotifier {
   bool _isCompleted = false;
   bool _soundActivated = false;
   double _sensitivity = 0.8;
+  SoundMode _soundMode = SoundMode.any;
 
   final SoundDetector _detector = SoundDetector();
 
@@ -31,6 +32,13 @@ class TimerNotifier extends ChangeNotifier {
   bool get isCompleted => _isCompleted;
   bool get soundActivated => _soundActivated;
   double get sensitivity => _sensitivity;
+  SoundMode get soundMode => _soundMode;
+
+  void setSoundMode(SoundMode mode) {
+    _soundMode = mode;
+    _detector.soundMode = mode;
+    notifyListeners();
+  }
 
   double get _rmsThreshold => 0.20 - 0.19 * _sensitivity;
 
@@ -86,8 +94,8 @@ class TimerNotifier extends ChangeNotifier {
   }
 
   void _start() {
-    // No wakelock — we intentionally let the screen sleep to save battery.
-    // The timer continues running in the background accurately.
+    _detector.suppress(const Duration(milliseconds: 800));
+    _wakeScreen();
     _isRunning = true;
     notifyListeners();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -102,6 +110,7 @@ class TimerNotifier extends ChangeNotifier {
 
   void pause() {
     _timer?.cancel();
+    _wakeScreen();
     _isRunning = false;
     notifyListeners();
   }
@@ -116,6 +125,8 @@ class TimerNotifier extends ChangeNotifier {
 
   void _onComplete() {
     _timer?.cancel();
+    // Suppress mic for 4 s so the completion chime doesn't re-trigger the detector.
+    _detector.suppress(const Duration(seconds: 4));
     _wakeScreen();
     SoundPlayer.playCompletionAlert();
     HapticFeedback.heavyImpact();
@@ -127,14 +138,19 @@ class TimerNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Wakes the display via X11/XWayland DPMS commands (Linux/WSLg only).
   void _wakeScreen() {
-    if (!Platform.isLinux) return;
-    Future<void> run(List<String> args) async {
-      try { await Process.run('xset', args); } catch (_) {}
+    if (kIsWeb) return;
+    if (Platform.isLinux) {
+      Future<void> run(List<String> args) async {
+        try { await Process.run('xset', args); } catch (_) {}
+      }
+      run(['s', 'reset']);
+      run(['dpms', 'force', 'on']);
+    } else if (Platform.isAndroid) {
+      const MethodChannel('hands_free_timer/wake_screen')
+          .invokeMethod<void>('wakeScreen')
+          .catchError((_) {});
     }
-    run(['s', 'reset']);
-    run(['dpms', 'force', 'on']);
   }
 
   Future<void> toggleSoundActivation() async {

@@ -24,16 +24,16 @@ class AppLocalizationsBn extends AppLocalizations {
   String get statusPaused => 'বিরতি';
 
   @override
-  String get btnClapToRestart => 'পুনরায় শুরু করতে হাততালি';
+  String get btnClapToRestart => 'পুনরায় শুরু করতে শব্দ';
 
   @override
   String get btnRestart => 'পুনরায় শুরু';
 
   @override
-  String get btnClapToPause => 'বিরতি দিতে হাততালি';
+  String get btnClapToPause => 'বিরতি দিতে শব্দ';
 
   @override
-  String get btnListeningClapToStart => 'শুনছি: শুরু করতে হাততালি';
+  String get btnListeningClapToStart => 'শুনছি: শুরু করতে শব্দ';
 
   @override
   String get btnPause => 'বিরতি দিন';
