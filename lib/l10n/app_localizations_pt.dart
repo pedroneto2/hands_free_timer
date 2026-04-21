@@ -150,4 +150,16 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get selectLanguage => 'Selecionar Idioma';
+
+  @override
+  String get soundTrigger => 'Gatilho de som';
+
+  @override
+  String get soundModeAny => 'Qualquer';
+
+  @override
+  String get soundModeWhistle => 'Assobio';
+
+  @override
+  String get soundModeYell => 'Grito';
 }

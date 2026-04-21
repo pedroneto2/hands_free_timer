@@ -75,10 +75,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get soundTrigger => 'Déclencheur sonore';
 
   @override
-  String get soundModeAny => 'N\'importe';
+  String get soundModeAny => 'Tout';
 
   @override
-  String get soundModeWhistle => 'Sifflet';
+  String get soundModeWhistle => 'Sifflement';
 
   @override
   String get soundModeYell => 'Cri';
