@@ -20,5 +20,9 @@
   "micSensitivity": "حساسية الميكروفون",
   "sensitivityLow": "منخفضة",
   "sensitivityHigh": "عالية",
-  "selectLanguage": "اختر اللغة"
+  "selectLanguage": "اختر اللغة",
+  "soundTrigger": "مشغّل الصوت",
+  "soundModeAny": "أي صوت",
+  "soundModeWhistle": "صفير",
+  "soundModeYell": "صراخ"
 }

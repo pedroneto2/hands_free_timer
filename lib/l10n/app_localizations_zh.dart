@@ -24,16 +24,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get statusPaused => '已暂停';
 
   @override
-  String get btnClapToRestart => '声音重新开始';
+  String get btnClapToRestart => '发声重启';
 
   @override
   String get btnRestart => '重新开始';
 
   @override
-  String get btnClapToPause => '声音暂停';
+  String get btnClapToPause => '发声暂停';
 
   @override
-  String get btnListeningClapToStart => '聆听：声音开始';
+  String get btnListeningClapToStart => '聆听：发声启动';
 
   @override
   String get btnPause => '暂停';
@@ -70,4 +70,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get selectLanguage => '选择语言';
+
+  @override
+  String get soundTrigger => '声音触发';
+
+  @override
+  String get soundModeAny => '任意';
+
+  @override
+  String get soundModeWhistle => '口哨';
+
+  @override
+  String get soundModeYell => '呼喊';
 }

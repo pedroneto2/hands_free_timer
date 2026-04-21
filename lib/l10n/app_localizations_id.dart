@@ -70,4 +70,16 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Pilih Bahasa';
+
+  @override
+  String get soundTrigger => 'Pemicu suara';
+
+  @override
+  String get soundModeAny => 'Apa saja';
+
+  @override
+  String get soundModeWhistle => 'Siulan';
+
+  @override
+  String get soundModeYell => 'Teriakan';
 }

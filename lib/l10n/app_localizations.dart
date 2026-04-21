@@ -240,6 +240,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Language'**
   String get selectLanguage;
+
+  /// No description provided for @soundTrigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound trigger'**
+  String get soundTrigger;
+
+  /// No description provided for @soundModeAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get soundModeAny;
+
+  /// No description provided for @soundModeWhistle.
+  ///
+  /// In en, this message translates to:
+  /// **'Whistle'**
+  String get soundModeWhistle;
+
+  /// No description provided for @soundModeYell.
+  ///
+  /// In en, this message translates to:
+  /// **'Yell'**
+  String get soundModeYell;
 }
 
 class _AppLocalizationsDelegate

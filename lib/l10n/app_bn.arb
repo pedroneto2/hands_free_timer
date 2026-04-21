@@ -5,10 +5,10 @@
   "statusRunning": "চলছে",
   "statusReady": "প্রস্তুত",
   "statusPaused": "বিরতি",
-  "btnClapToRestart": "পুনরায় শুরু করতে শব্দ",
+  "btnClapToRestart": "শব্দ দিয়ে পুনরায় শুরু",
   "btnRestart": "পুনরায় শুরু",
-  "btnClapToPause": "বিরতি দিতে শব্দ",
-  "btnListeningClapToStart": "শুনছি: শুরু করতে শব্দ",
+  "btnClapToPause": "শব্দ দিয়ে বিরতি",
+  "btnListeningClapToStart": "শুনছি: শব্দ দিয়ে শুরু",
   "btnPause": "বিরতি দিন",
   "btnStart": "শুরু করুন",
   "presetCustom": "কাস্টম",
@@ -20,5 +20,9 @@
   "micSensitivity": "মাইক সংবেদনশীলতা",
   "sensitivityLow": "কম",
   "sensitivityHigh": "বেশি",
-  "selectLanguage": "ভাষা নির্বাচন করুন"
+  "selectLanguage": "ভাষা নির্বাচন করুন",
+  "soundTrigger": "শব্দ ট্রিগার",
+  "soundModeAny": "যেকোনো",
+  "soundModeWhistle": "শিস",
+  "soundModeYell": "চিৎকার"
 }

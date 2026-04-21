@@ -70,4 +70,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Seleccionar Idioma';
+
+  @override
+  String get soundTrigger => 'Activador de sonido';
+
+  @override
+  String get soundModeAny => 'Cualquiera';
+
+  @override
+  String get soundModeWhistle => 'Silbido';
+
+  @override
+  String get soundModeYell => 'Grito';
 }

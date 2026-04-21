@@ -20,5 +20,9 @@
   "micSensitivity": "SENSIBILIDAD DEL MIC",
   "sensitivityLow": "Baja",
   "sensitivityHigh": "Alta",
-  "selectLanguage": "Seleccionar Idioma"
+  "selectLanguage": "Seleccionar Idioma",
+  "soundTrigger": "Activador de sonido",
+  "soundModeAny": "Cualquiera",
+  "soundModeWhistle": "Silbido",
+  "soundModeYell": "Grito"
 }

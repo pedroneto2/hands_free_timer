@@ -5,10 +5,10 @@
   "statusRunning": "चल रहा है",
   "statusReady": "तैयार",
   "statusPaused": "रुका हुआ",
-  "btnClapToRestart": "पुनः शुरू करने के लिए आवाज़",
+  "btnClapToRestart": "आवाज़ से पुनः शुरू",
   "btnRestart": "पुनः शुरू",
-  "btnClapToPause": "रोकने के लिए आवाज़",
-  "btnListeningClapToStart": "सुन रहा है: शुरू करने के लिए आवाज़",
+  "btnClapToPause": "आवाज़ से रोकें",
+  "btnListeningClapToStart": "सुन रहा है: आवाज़ से शुरू",
   "btnPause": "रोकें",
   "btnStart": "शुरू करें",
   "presetCustom": "कस्टम",
@@ -20,5 +20,9 @@
   "micSensitivity": "माइक संवेदनशीलता",
   "sensitivityLow": "कम",
   "sensitivityHigh": "अधिक",
-  "selectLanguage": "भाषा चुनें"
+  "selectLanguage": "भाषा चुनें",
+  "soundTrigger": "ध्वनि ट्रिगर",
+  "soundModeAny": "कोई भी",
+  "soundModeWhistle": "सीटी",
+  "soundModeYell": "चिल्लाहट"
 }

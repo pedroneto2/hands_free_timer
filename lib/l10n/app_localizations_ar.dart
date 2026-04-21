@@ -70,4 +70,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get selectLanguage => 'اختر اللغة';
+
+  @override
+  String get soundTrigger => 'مشغّل الصوت';
+
+  @override
+  String get soundModeAny => 'أي صوت';
+
+  @override
+  String get soundModeWhistle => 'صفير';
+
+  @override
+  String get soundModeYell => 'صراخ';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import '../notifiers/timer_notifier.dart';
 import '../services/sound_detector.dart';
 
@@ -11,11 +12,12 @@ class SoundModeSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       children: [
         Text(
-          'Sound trigger',
+          l10n.soundTrigger,
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
                 color: cs.onSurfaceVariant,
               ),
@@ -25,21 +27,21 @@ class SoundModeSelector extends StatelessWidget {
           style: SegmentedButton.styleFrom(
             visualDensity: VisualDensity.compact,
           ),
-          segments: const [
+          segments: [
             ButtonSegment(
               value: SoundMode.any,
-              icon: Icon(Icons.graphic_eq_rounded),
-              label: Text('Any'),
+              icon: const Icon(Icons.graphic_eq_rounded),
+              label: Text(l10n.soundModeAny),
             ),
             ButtonSegment(
               value: SoundMode.whistle,
-              icon: Icon(Icons.music_note_rounded),
-              label: Text('Whistle'),
+              icon: const Icon(Icons.music_note_rounded),
+              label: Text(l10n.soundModeWhistle),
             ),
             ButtonSegment(
               value: SoundMode.yell,
-              icon: Icon(Icons.record_voice_over_rounded),
-              label: Text('Yell'),
+              icon: const Icon(Icons.record_voice_over_rounded),
+              label: Text(l10n.soundModeYell),
             ),
           ],
           selected: {notifier.soundMode},

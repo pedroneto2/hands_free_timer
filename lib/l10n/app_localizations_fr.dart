@@ -70,4 +70,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Choisir la langue';
+
+  @override
+  String get soundTrigger => 'Déclencheur sonore';
+
+  @override
+  String get soundModeAny => 'N\'importe';
+
+  @override
+  String get soundModeWhistle => 'Sifflet';
+
+  @override
+  String get soundModeYell => 'Cri';
 }

@@ -24,16 +24,16 @@ class AppLocalizationsBn extends AppLocalizations {
   String get statusPaused => 'বিরতি';
 
   @override
-  String get btnClapToRestart => 'পুনরায় শুরু করতে শব্দ';
+  String get btnClapToRestart => 'শব্দ দিয়ে পুনরায় শুরু';
 
   @override
   String get btnRestart => 'পুনরায় শুরু';
 
   @override
-  String get btnClapToPause => 'বিরতি দিতে শব্দ';
+  String get btnClapToPause => 'শব্দ দিয়ে বিরতি';
 
   @override
-  String get btnListeningClapToStart => 'শুনছি: শুরু করতে শব্দ';
+  String get btnListeningClapToStart => 'শুনছি: শব্দ দিয়ে শুরু';
 
   @override
   String get btnPause => 'বিরতি দিন';
@@ -70,4 +70,16 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get selectLanguage => 'ভাষা নির্বাচন করুন';
+
+  @override
+  String get soundTrigger => 'শব্দ ট্রিগার';
+
+  @override
+  String get soundModeAny => 'যেকোনো';
+
+  @override
+  String get soundModeWhistle => 'শিস';
+
+  @override
+  String get soundModeYell => 'চিৎকার';
 }

@@ -24,16 +24,16 @@ class AppLocalizationsHi extends AppLocalizations {
   String get statusPaused => 'रुका हुआ';
 
   @override
-  String get btnClapToRestart => 'पुनः शुरू करने के लिए आवाज़';
+  String get btnClapToRestart => 'आवाज़ से पुनः शुरू';
 
   @override
   String get btnRestart => 'पुनः शुरू';
 
   @override
-  String get btnClapToPause => 'रोकने के लिए आवाज़';
+  String get btnClapToPause => 'आवाज़ से रोकें';
 
   @override
-  String get btnListeningClapToStart => 'सुन रहा है: शुरू करने के लिए आवाज़';
+  String get btnListeningClapToStart => 'सुन रहा है: आवाज़ से शुरू';
 
   @override
   String get btnPause => 'रोकें';
@@ -70,4 +70,16 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get selectLanguage => 'भाषा चुनें';
+
+  @override
+  String get soundTrigger => 'ध्वनि ट्रिगर';
+
+  @override
+  String get soundModeAny => 'कोई भी';
+
+  @override
+  String get soundModeWhistle => 'सीटी';
+
+  @override
+  String get soundModeYell => 'चिल्लाहट';
 }

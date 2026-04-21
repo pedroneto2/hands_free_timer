@@ -5,10 +5,10 @@
   "statusRunning": "چل رہا ہے",
   "statusReady": "تیار",
   "statusPaused": "روکا ہوا",
-  "btnClapToRestart": "دوبارہ شروع کرنے کے لیے آواز",
+  "btnClapToRestart": "آواز سے دوبارہ شروع",
   "btnRestart": "دوبارہ شروع",
-  "btnClapToPause": "روکنے کے لیے آواز",
-  "btnListeningClapToStart": "سن رہا ہے: شروع کرنے کے لیے آواز",
+  "btnClapToPause": "آواز سے روکیں",
+  "btnListeningClapToStart": "سن رہا ہے: آواز سے شروع",
   "btnPause": "روکیں",
   "btnStart": "شروع کریں",
   "presetCustom": "حسب ضرورت",
@@ -20,5 +20,9 @@
   "micSensitivity": "مائیک حساسیت",
   "sensitivityLow": "کم",
   "sensitivityHigh": "زیادہ",
-  "selectLanguage": "زبان منتخب کریں"
+  "selectLanguage": "زبان منتخب کریں",
+  "soundTrigger": "آواز ٹرگر",
+  "soundModeAny": "کوئی بھی",
+  "soundModeWhistle": "سیٹی",
+  "soundModeYell": "چیخ"
 }

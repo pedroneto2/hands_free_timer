@@ -20,5 +20,9 @@
   "micSensitivity": "MIC SENSITIVITY",
   "sensitivityLow": "Low",
   "sensitivityHigh": "High",
-  "selectLanguage": "Select Language"
+  "selectLanguage": "Select Language",
+  "soundTrigger": "Sound trigger",
+  "soundModeAny": "Any",
+  "soundModeWhistle": "Whistle",
+  "soundModeYell": "Yell"
 }

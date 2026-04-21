@@ -20,5 +20,9 @@
   "micSensitivity": "SENSITIVITAS MIC",
   "sensitivityLow": "Rendah",
   "sensitivityHigh": "Tinggi",
-  "selectLanguage": "Pilih Bahasa"
+  "selectLanguage": "Pilih Bahasa",
+  "soundTrigger": "Pemicu suara",
+  "soundModeAny": "Apa saja",
+  "soundModeWhistle": "Siulan",
+  "soundModeYell": "Teriakan"
 }

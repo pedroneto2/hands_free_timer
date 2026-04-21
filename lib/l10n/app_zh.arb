@@ -5,10 +5,10 @@
   "statusRunning": "运行中",
   "statusReady": "准备",
   "statusPaused": "已暂停",
-  "btnClapToRestart": "声音重新开始",
+  "btnClapToRestart": "发声重新开始",
   "btnRestart": "重新开始",
-  "btnClapToPause": "声音暂停",
-  "btnListeningClapToStart": "聆听：声音开始",
+  "btnClapToPause": "发声暂停",
+  "btnListeningClapToStart": "聆听：发声开始",
   "btnPause": "暂停",
   "btnStart": "开始",
   "presetCustom": "自定义",
@@ -20,5 +20,9 @@
   "micSensitivity": "麦克风灵敏度",
   "sensitivityLow": "低",
   "sensitivityHigh": "高",
-  "selectLanguage": "选择语言"
+  "selectLanguage": "选择语言",
+  "soundTrigger": "声音触发",
+  "soundModeAny": "任意",
+  "soundModeWhistle": "哨声",
+  "soundModeYell": "呼喊"
 }
