@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:hands_free_timer/l10n/app_localizations.dart';
 
-import '../main.dart' show timerNotifier;
+import '../main.dart' show timerNotifier, themeModeNotifier, saveThemeMode;
 import '../notifiers/timer_notifier.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/language_selector.dart';
@@ -90,6 +90,22 @@ class _TimerScreenState extends State<TimerScreen>
                 ),
           ),
           actions: [
+            ValueListenableBuilder<ThemeMode>(
+              valueListenable: themeModeNotifier,
+              builder: (context, themeMode, _) => IconButton(
+                icon: Icon(themeMode == ThemeMode.light
+                    ? Icons.dark_mode_rounded
+                    : Icons.light_mode_rounded),
+                onPressed: () {
+                  final next = themeMode == ThemeMode.light
+                      ? ThemeMode.dark
+                      : ThemeMode.light;
+                  themeModeNotifier.value = next;
+                  saveThemeMode(next);
+                },
+                color: cs.onSurfaceVariant,
+              ),
+            ),
             IconButton(
               icon: const Icon(Icons.language_rounded),
               onPressed: () => showLanguageSelector(context),
