@@ -108,7 +108,7 @@ class TimerPresets extends StatelessWidget {
       builder: (ctx) {
         bool isSeconds = startInSeconds;
 
-        Widget unitToggle(ColorScheme cs) {
+        Widget unitToggle(ColorScheme cs, StateSetter setDialogState) {
           Widget option(String label, bool selected) => AnimatedContainer(
                 duration: const Duration(milliseconds: 150),
                 padding:
@@ -186,7 +186,7 @@ class TimerPresets extends StatelessWidget {
                       fontWeight: FontWeight.w200,
                       letterSpacing: 2,
                     ),
-                    suffix: unitToggle(cs),
+                    suffix: unitToggle(cs, setDialogState),
                   ),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
