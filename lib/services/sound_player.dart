@@ -1,17 +1,29 @@
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 
 class SoundPlayer {
   static Uint8List? _cachedWav;
+  static final _player = AudioPlayer();
 
   // Three ascending tones — C5 → E5 → G5 (major chord arpeggio).
   static Future<void> playCompletionAlert() async {
     try {
       final wav = _cachedWav ??= _buildWav(_generateChime());
-      final file = File('${Directory.systemTemp.path}/hft_alert.wav');
-      if (!file.existsSync()) await file.writeAsBytes(wav);
-      Process.start('paplay', [file.path]); // fire-and-forget
+      if (!kIsWeb && Platform.isLinux) {
+        // Linux desktop: delegate to paplay (PulseAudio).
+        final file = File('${Directory.systemTemp.path}/hft_alert.wav');
+        if (!file.existsSync()) await file.writeAsBytes(wav);
+        Future<void> run() async {
+          try { await Process.run('paplay', [file.path]); } catch (_) {}
+        }
+        run();
+      } else {
+        // Android / iOS: play from memory via audioplayers.
+        await _player.stop();
+        await _player.play(BytesSource(wav));
+      }
     } catch (_) {}
   }
 

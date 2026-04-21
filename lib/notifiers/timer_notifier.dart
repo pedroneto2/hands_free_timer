@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../services/sound_detector.dart';
 import '../services/sound_player.dart';
@@ -141,6 +142,13 @@ class TimerNotifier extends ChangeNotifier {
       await _detector.stop();
       _soundActivated = false;
     } else {
+      if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+        final status = await Permission.microphone.request();
+        if (!status.isGranted) {
+          notifyListeners();
+          return;
+        }
+      }
       _soundActivated = true;
       _detector.threshold = _rmsThreshold;
       await _detector.start(startPause);

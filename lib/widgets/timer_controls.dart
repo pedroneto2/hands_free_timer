@@ -34,7 +34,8 @@ class TimerControls extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 24),
-        AnimatedBuilder(
+        Flexible(
+          child: AnimatedBuilder(
           animation: pulseAnimation,
           builder: (context, child) => Transform.scale(
             scale: isListening ? pulseAnimation.value : 1.0,
@@ -44,7 +45,7 @@ class TimerControls extends StatelessWidget {
             onPressed: notifier.startPause,
             style: FilledButton.styleFrom(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 18),
+                  const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(32),
               ),
@@ -56,14 +57,18 @@ class TimerControls extends StatelessWidget {
               children: [
                 Icon(_centerButtonIcon(isGreen), size: 26),
                 const SizedBox(width: 8),
-                Text(
-                  _centerButtonLabel(context, isGreen),
-                  style: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w600),
+                Flexible(
+                  child: Text(
+                    _centerButtonLabel(context, isGreen),
+                    style: const TextStyle(
+                        fontSize: 17, fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ),
           ),
+        ),
         ),
         const SizedBox(width: 24),
         IconButton.outlined(

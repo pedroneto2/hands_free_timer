@@ -21,12 +21,16 @@ bool get isMobilePlatform =>
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (isMobilePlatform) {
-    await MobileAds.instance.initialize();
-    appOpenAdManager = AppOpenAdManager(
-      timerNotifier: timerNotifier,
-      navigatorKey: navigatorKey,
-    );
-    appOpenAdManager!.initialize();
+    try {
+      await MobileAds.instance.initialize();
+      appOpenAdManager = AppOpenAdManager(
+        timerNotifier: timerNotifier,
+        navigatorKey: navigatorKey,
+      );
+      appOpenAdManager!.initialize();
+    } catch (e) {
+      debugPrint('AdMob init failed: $e');
+    }
   }
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const HandsFreeTimerApp());
