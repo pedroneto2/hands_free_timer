@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:permission_handler/permission_handler.dart';
 
 import '../services/sound_detector.dart';
@@ -95,7 +95,6 @@ class TimerNotifier extends ChangeNotifier {
 
   void _start() {
     _detector.suppress(const Duration(milliseconds: 800));
-    _wakeScreen();
     _isRunning = true;
     notifyListeners();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -110,7 +109,6 @@ class TimerNotifier extends ChangeNotifier {
 
   void pause() {
     _timer?.cancel();
-    _wakeScreen();
     _isRunning = false;
     notifyListeners();
   }
@@ -127,7 +125,6 @@ class TimerNotifier extends ChangeNotifier {
     _timer?.cancel();
     // Suppress mic for 4 s so the completion chime doesn't re-trigger the detector.
     _detector.suppress(const Duration(seconds: 4));
-    _wakeScreen();
     SoundPlayer.playCompletionAlert();
     HapticFeedback.heavyImpact();
     Future.delayed(const Duration(milliseconds: 300), HapticFeedback.heavyImpact);
@@ -136,21 +133,6 @@ class TimerNotifier extends ChangeNotifier {
     _isCompleted = true;
     _remainingSeconds = 0;
     notifyListeners();
-  }
-
-  void _wakeScreen() {
-    if (kIsWeb) return;
-    if (Platform.isLinux) {
-      Future<void> run(List<String> args) async {
-        try { await Process.run('xset', args); } catch (_) {}
-      }
-      run(['s', 'reset']);
-      run(['dpms', 'force', 'on']);
-    } else if (Platform.isAndroid) {
-      const MethodChannel('hands_free_timer/wake_screen')
-          .invokeMethod<void>('wakeScreen')
-          .catchError((_) {});
-    }
   }
 
   Future<void> toggleSoundActivation() async {
