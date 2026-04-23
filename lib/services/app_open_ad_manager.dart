@@ -10,6 +10,7 @@ class AppOpenAdManager with WidgetsBindingObserver {
 
   AppOpenAd? _ad;
   bool _isShowingAd = false;
+  bool _pendingShow = false;
 
   AppOpenAdManager({required TimerNotifier timerNotifier})
       : _timerNotifier = timerNotifier {
@@ -17,17 +18,25 @@ class AppOpenAdManager with WidgetsBindingObserver {
   }
 
   void initialize() {
-    _loadAd();
-    Future.delayed(const Duration(milliseconds: 800), _tryShowAd);
+    _loadAd(showWhenReady: true);
   }
 
-  void _loadAd() {
+  void _loadAd({bool showWhenReady = false}) {
     AppOpenAd.load(
       adUnitId: _adUnitId,
       request: const AdRequest(),
       adLoadCallback: AppOpenAdLoadCallback(
-        onAdLoaded: (ad) => _ad = ad,
-        onAdFailedToLoad: (_) => _ad = null,
+        onAdLoaded: (ad) {
+          _ad = ad;
+          if (showWhenReady || _pendingShow) {
+            _pendingShow = false;
+            _tryShowAd();
+          }
+        },
+        onAdFailedToLoad: (_) {
+          _ad = null;
+          _pendingShow = false;
+        },
       ),
     );
   }
@@ -35,7 +44,12 @@ class AppOpenAdManager with WidgetsBindingObserver {
   bool _shouldShow() => !_isShowingAd && !_timerNotifier.isRunning;
 
   Future<void> _tryShowAd() async {
-    if (_ad == null || !_shouldShow()) return;
+    if (!_shouldShow()) return;
+    if (_ad == null) {
+      _pendingShow = true;
+      return;
+    }
+    _pendingShow = false;
     _isShowingAd = true;
     _ad!.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: _releaseAd,
