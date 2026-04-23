@@ -4,7 +4,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/foreground_timer_service.dart';
+import '../services/notification_service.dart';
 import '../services/sound_detector.dart';
 import '../services/sound_player.dart';
 
@@ -12,6 +15,13 @@ enum TimerStatus { ready, running, paused, completed }
 
 class TimerNotifier extends ChangeNotifier {
   static const List<int> presets = [1, 5, 10, 15, 30];
+
+  static const _kEndTimeMs = 'timer_end_ms';
+  static const _kTotalSec = 'timer_total_sec';
+  static const _kRemainingSec = 'timer_remaining_sec';
+  static const _kWasPaused = 'timer_was_paused';
+  static const _kPreset = 'timer_preset_min';
+  static const _kCustomSec = 'timer_custom_sec';
 
   int _selectedPreset = 10;
   int _totalSeconds = 10 * 60;
@@ -93,10 +103,76 @@ class TimerNotifier extends ChangeNotifier {
     _isRunning ? pause() : _start();
   }
 
+  Future<void> initFromSaved() async {
+    final prefs = await SharedPreferences.getInstance();
+    final total = prefs.getInt(_kTotalSec);
+    if (total == null) return;
+
+    _totalSeconds = total;
+    _selectedPreset = prefs.getInt(_kPreset) ?? _selectedPreset;
+    _customSeconds = prefs.getInt(_kCustomSec);
+
+    final endTimeMs = prefs.getInt(_kEndTimeMs);
+    if (endTimeMs != null) {
+      final remainingMs = endTimeMs - DateTime.now().millisecondsSinceEpoch;
+      if (remainingMs > 0) {
+        _remainingSeconds = (remainingMs / 1000).ceil();
+        _start();
+      } else {
+        _remainingSeconds = 0;
+        _onComplete();
+      }
+      return;
+    }
+
+    final wasPaused = prefs.getBool(_kWasPaused) ?? false;
+    final remaining = prefs.getInt(_kRemainingSec);
+    if (wasPaused && remaining != null) {
+      _remainingSeconds = remaining;
+    }
+  }
+
+  void _saveRunningState() async {
+    final prefs = await SharedPreferences.getInstance();
+    final endMs =
+        DateTime.now().millisecondsSinceEpoch + _remainingSeconds * 1000;
+    await prefs.setInt(_kEndTimeMs, endMs);
+    await prefs.setInt(_kTotalSec, _totalSeconds);
+    await prefs.remove(_kRemainingSec);
+    await prefs.remove(_kWasPaused);
+    await prefs.setInt(_kPreset, _selectedPreset);
+    final cs = _customSeconds;
+    if (cs != null) {
+      await prefs.setInt(_kCustomSec, cs);
+    } else {
+      await prefs.remove(_kCustomSec);
+    }
+  }
+
+  void _savePausedState() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_kEndTimeMs);
+    await prefs.setInt(_kRemainingSec, _remainingSeconds);
+    await prefs.setInt(_kTotalSec, _totalSeconds);
+    await prefs.setBool(_kWasPaused, true);
+  }
+
+  void _clearSavedState() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_kEndTimeMs);
+    await prefs.remove(_kRemainingSec);
+    await prefs.remove(_kTotalSec);
+    await prefs.remove(_kWasPaused);
+    await prefs.remove(_kPreset);
+    await prefs.remove(_kCustomSec);
+  }
+
   void _start() {
     _detector.suppress(const Duration(milliseconds: 800));
     _isRunning = true;
     notifyListeners();
+    _saveRunningState();
+    ForegroundTimerService.start(timeDisplay);
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (_remainingSeconds <= 0) {
         _onComplete();
@@ -104,6 +180,7 @@ class TimerNotifier extends ChangeNotifier {
       }
       _remainingSeconds--;
       notifyListeners();
+      ForegroundTimerService.update(timeDisplay);
     });
   }
 
@@ -111,6 +188,8 @@ class TimerNotifier extends ChangeNotifier {
     _timer?.cancel();
     _isRunning = false;
     notifyListeners();
+    _savePausedState();
+    ForegroundTimerService.stop();
   }
 
   void reset() {
@@ -119,6 +198,8 @@ class TimerNotifier extends ChangeNotifier {
     _isCompleted = false;
     _remainingSeconds = _totalSeconds;
     notifyListeners();
+    _clearSavedState();
+    ForegroundTimerService.stop();
   }
 
   void _onComplete() {
@@ -133,6 +214,9 @@ class TimerNotifier extends ChangeNotifier {
     _isCompleted = true;
     _remainingSeconds = 0;
     notifyListeners();
+    _clearSavedState();
+    ForegroundTimerService.stop();
+    NotificationService.showTimerComplete(_totalSeconds);
   }
 
   Future<void> toggleSoundActivation() async {

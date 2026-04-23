@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'notifiers/timer_notifier.dart';
 import 'screens/timer_screen.dart';
 import 'services/app_open_ad_manager.dart';
+import 'services/foreground_timer_service.dart';
+import 'services/notification_service.dart';
 
 final localeNotifier = ValueNotifier<Locale>(const Locale('en'));
 final themeModeNotifier = ValueNotifier<ThemeMode>(ThemeMode.dark);
@@ -37,12 +39,14 @@ Future<void> saveThemeMode(ThemeMode mode) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _loadTheme();
+  ForegroundTimerService.init();
+  await NotificationService.init();
+  await timerNotifier.initFromSaved();
   if (isMobilePlatform) {
     try {
       await MobileAds.instance.initialize();
       appOpenAdManager = AppOpenAdManager(
         timerNotifier: timerNotifier,
-        navigatorKey: navigatorKey,
       );
       appOpenAdManager!.initialize();
     } catch (e) {

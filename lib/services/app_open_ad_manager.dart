@@ -3,7 +3,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../notifiers/timer_notifier.dart';
-import '../screens/ad_splash_screen.dart';
 
 class AppOpenAdManager with WidgetsBindingObserver {
   static const _adUnitId = 'ca-app-pub-4361775098637470/7334317300';
@@ -11,83 +10,46 @@ class AppOpenAdManager with WidgetsBindingObserver {
   static const _prefKey = 'last_app_open_ad_shown_ms';
 
   final TimerNotifier _timerNotifier;
-  final GlobalKey<NavigatorState> _navigatorKey;
 
   AppOpenAd? _ad;
   bool _isShowingAd = false;
-  bool _splashActive = false;
 
-  final adLoadedNotifier = ValueNotifier<bool>(false);
-
-  AppOpenAdManager({
-    required TimerNotifier timerNotifier,
-    required GlobalKey<NavigatorState> navigatorKey,
-  })  : _timerNotifier = timerNotifier,
-        _navigatorKey = navigatorKey {
+  AppOpenAdManager({required TimerNotifier timerNotifier})
+      : _timerNotifier = timerNotifier {
     WidgetsBinding.instance.addObserver(this);
   }
 
   void initialize() {
     _loadAd();
-    Future.delayed(const Duration(milliseconds: 800), _tryShowSplash);
+    Future.delayed(const Duration(milliseconds: 800), _tryShowAd);
   }
 
   void _loadAd() {
-    adLoadedNotifier.value = false;
     AppOpenAd.load(
       adUnitId: _adUnitId,
       request: const AdRequest(),
       adLoadCallback: AppOpenAdLoadCallback(
-        onAdLoaded: (ad) {
-          _ad = ad;
-          adLoadedNotifier.value = true;
-        },
-        onAdFailedToLoad: (_) {
-          _ad = null;
-          adLoadedNotifier.value = false;
-        },
+        onAdLoaded: (ad) => _ad = ad,
+        onAdFailedToLoad: (_) => _ad = null,
       ),
     );
   }
 
   Future<bool> _shouldShow() async {
-    if (_isShowingAd || _splashActive || _timerNotifier.isRunning) return false;
+    if (_isShowingAd || _timerNotifier.isRunning) return false;
     final prefs = await SharedPreferences.getInstance();
     final lastMs = prefs.getInt(_prefKey) ?? 0;
     return DateTime.now().millisecondsSinceEpoch - lastMs >= _capMs;
   }
 
-  Future<void> _tryShowSplash() async {
-    if (!await _shouldShow()) return;
-    final state = _navigatorKey.currentState;
-    if (state == null) return;
-    _splashActive = true;
-    state.push(MaterialPageRoute<void>(
-      builder: (_) => AdSplashScreen(
-        adLoadedNotifier: adLoadedNotifier,
-        showAd: _showAd,
-        onClosed: _onSplashClosed,
-      ),
-    ));
-  }
-
-  Future<void> _showAd(BuildContext context, VoidCallback onDismissed) async {
-    if (_ad == null || _isShowingAd) {
-      onDismissed();
-      return;
-    }
+  Future<void> _tryShowAd() async {
+    if (_ad == null || !await _shouldShow()) return;
     _isShowingAd = true;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_prefKey, DateTime.now().millisecondsSinceEpoch);
     _ad!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdDismissedFullScreenContent: (ad) {
-        _releaseAd(ad);
-        onDismissed();
-      },
-      onAdFailedToShowFullScreenContent: (ad, _) {
-        _releaseAd(ad);
-        onDismissed();
-      },
+      onAdDismissedFullScreenContent: _releaseAd,
+      onAdFailedToShowFullScreenContent: (ad, _) => _releaseAd(ad),
     );
     _ad!.show();
   }
@@ -96,20 +58,16 @@ class AppOpenAdManager with WidgetsBindingObserver {
     ad.dispose();
     _ad = null;
     _isShowingAd = false;
-    adLoadedNotifier.value = false;
     _loadAd();
   }
 
-  void _onSplashClosed() => _splashActive = false;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) _tryShowSplash();
+    if (state == AppLifecycleState.resumed) _tryShowAd();
   }
 
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    adLoadedNotifier.dispose();
     _ad?.dispose();
   }
 }

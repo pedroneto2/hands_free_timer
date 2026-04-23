@@ -64,12 +64,14 @@
   <div class="container">
     <header>
       <h1>Privacy Policy</h1>
-      <p>Hands Free Timer &nbsp;·&nbsp; Last updated: April 19, 2025</p>
+      <p>Hands Free Timer &nbsp;·&nbsp; Last updated: April 23, 2026</p>
     </header>
 
     <div class="highlight">
-      <strong>Short version:</strong> Hands Free Timer does not collect, store, or share any personal data.
-      Your microphone is used only on-device to detect sounds — nothing ever leaves your phone.
+      <strong>Short version:</strong> Hands Free Timer does not collect, store, or share any personal data of its own.
+      Your microphone is used only on-device to detect sounds — that audio never leaves your phone.
+      The app displays ads via Google AdMob, which may collect an advertising identifier
+      as described in section 5.
     </div>
 
     <h2>1. Who We Are</h2>
@@ -82,8 +84,23 @@
     <h2>2. What the App Does</h2>
     <p>
       Hands Free Timer is a countdown timer that you can start and pause hands-free by clapping
-      or making a sound. It does not require an internet connection and has no user accounts,
-      sign-in, or registration of any kind.
+      or making a sound. It has no user accounts, sign-in, or registration of any kind.
+    </p>
+    <p>
+      While a countdown is active, the app runs a foreground service that displays a persistent
+      status-bar notification showing the remaining time. This keeps the timer accurate in the
+      background and prevents the operating system from suspending it. The service and its
+      notification are automatically dismissed when the timer is paused, reset, or completed.
+    </p>
+    <p>
+      When a countdown finishes, the app sends a local notification to your device alerting you
+      that the timer has ended. This notification is generated entirely on-device; no data is
+      transmitted to any server.
+    </p>
+    <p>
+      The app displays ads provided by Google AdMob (see section 5).
+      An internet connection is required only for ad delivery; all timer functionality
+      works fully offline.
     </p>
 
     <h2>3. Microphone Access</h2>
@@ -104,61 +121,116 @@
     </p>
 
     <h2>4. Data We Do Not Collect</h2>
-    <p>We do not collect, process, or store any of the following:</p>
+    <p>
+      The app itself (outside of the Google AdMob SDK described in section 5) does not
+      collect, process, or transmit any of the following:
+    </p>
     <ul>
       <li>Personal identifiers (name, email, phone number, device ID)</li>
       <li>Location data</li>
       <li>Usage analytics or crash reports</li>
-      <li>Advertising identifiers</li>
       <li>Financial or payment information</li>
       <li>Health or fitness data</li>
       <li>Contacts, photos, files, or any other device content</li>
     </ul>
 
-    <h2>5. Third-Party Services</h2>
+    <h2>5. Third-Party Services — Google AdMob</h2>
     <p>
-      Hands Free Timer does not integrate any third-party SDKs, analytics services,
-      advertising networks, or social media platforms. The app makes no network
-      requests whatsoever during normal operation.
+      Hands Free Timer displays ads served by <strong>Google AdMob</strong>, a service operated
+      by Google LLC. AdMob may collect and use the following data to serve relevant ads:
+    </p>
+    <ul>
+      <li>Advertising identifier (Google Advertising ID / GAID)</li>
+      <li>Approximate device information (OS version, device model)</li>
+      <li>IP address (used to infer country/region; not stored by us)</li>
+      <li>Ad interaction data (impressions, taps)</li>
+    </ul>
+    <p>
+      This data is collected and processed by Google under their own privacy policy.
+      We do not receive, store, or have access to this data.
+      You can review Google's practices and opt out of personalised ads at any time:
+    </p>
+    <ul>
+      <li>
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">
+          Google Privacy Policy
+        </a>
+      </li>
+      <li>
+        On Android: <em>Settings → Google → Ads → Delete advertising ID</em>
+        to opt out of interest-based advertising.
+      </li>
+    </ul>
+    <p>
+      No other third-party SDKs, analytics services, or social media platforms are integrated
+      into this app.
     </p>
 
-    <h2>6. Children's Privacy</h2>
+    <h2>6. Permissions</h2>
+    <p>The app requests the following device permissions:</p>
+    <ul>
+      <li>
+        <strong>Microphone</strong> — to detect sounds for hands-free timer control.
+        Audio is processed on-device only; no recordings are made or transmitted.
+      </li>
+      <li>
+        <strong>Notifications</strong> — to display a foreground service notification while the
+        timer runs in the background, and to send a local alert when the countdown finishes.
+        All notifications are generated on-device; no data leaves your phone.
+      </li>
+    </ul>
     <p>
-      This app is safe for all ages. We do not knowingly collect any information from
-      children or anyone else, as described above. The app complies with the
-      Children's Online Privacy Protection Act (COPPA) and equivalent regulations.
+      You can revoke either permission at any time through your device's Settings.
+      Revoking microphone permission disables hands-free control but the timer continues
+      to work manually. Revoking notification permission removes background and completion
+      alerts but does not affect the timer itself.
     </p>
 
-    <h2>7. Data Retention</h2>
+    <h2>7. Children's Privacy</h2>
     <p>
-      Because no data is collected, there is nothing to retain or delete.
-      Your timer preferences (preset duration, sensitivity level) may be stored
-      locally on your device by the operating system as standard app state.
-      This data never leaves your device and can be cleared by uninstalling the app.
+      We do not knowingly collect any personal information from children or anyone else,
+      as described above. Google AdMob provides mechanisms for child-directed ad serving
+      in compliance with COPPA and equivalent regulations.
     </p>
 
-    <h2>8. Your Rights</h2>
+    <h2>8. Data Retention</h2>
+    <p>
+      We collect no personal data, so there is nothing to retain or delete on our end.
+      The following data is stored <strong>locally on your device only</strong> and never
+      transmitted anywhere:
+    </p>
+    <ul>
+      <li>Timer preferences — selected preset duration and sensitivity level.</li>
+      <li>Timer state — remaining time, so the countdown can be accurately restored if
+          the app is suspended or restarted by the operating system.</li>
+      <li>Theme preference — light or dark mode.</li>
+      <li>Ad frequency cap — a timestamp used to limit how often ads are shown.</li>
+    </ul>
+    <p>All locally stored data is permanently removed when you uninstall the app.</p>
+
+    <h2>9. Your Rights</h2>
     <p>
       Since we collect no personal data, there is no data for us to provide, correct,
-      or delete on request. If you have concerns, please contact us and we will respond
-      within 30 days.
+      or delete on request. For data collected by Google AdMob, please refer to
+      Google's own data controls and opt-out options described in section 5.
+      If you have any other concerns, please contact us and we will respond within 30 days.
     </p>
 
-    <h2>9. Changes to This Policy</h2>
+    <h2>10. Changes to This Policy</h2>
     <p>
       If we ever update this privacy policy, the new version will be posted at this URL
       with an updated "Last updated" date. Continued use of the app after a change
       constitutes acceptance of the revised policy.
     </p>
 
-    <h2>10. Contact</h2>
+    <h2>11. Contact</h2>
     <p>
       Questions or concerns about this privacy policy?<br />
       Email: <a href="mailto:pedro.neto992@gmail.com">pedro.neto992@gmail.com</a>
     </p>
 
     <footer>
-      &copy; 2025 Pedro Barbosa &nbsp;·&nbsp; Hands Free Timer
+      &copy; 2026 Pedro Barbosa &nbsp;·&nbsp; Hands Free Timer
     </footer>
   </div>
 </body>
