@@ -7,7 +7,6 @@ class SoundPlayer {
   static Uint8List? _cachedWav;
   static final _player = AudioPlayer();
 
-  // Three ascending tones — C5 → E5 → G5 (major chord arpeggio).
   static Future<void> playCompletionAlert() async {
     try {
       final wav = _cachedWav ??= _buildWav(_generateChime());
@@ -29,23 +28,22 @@ class SoundPlayer {
 
   static List<int> _generateChime() {
     final samples = <int>[];
-    for (final freq in [523, 659, 784]) {
-      samples.addAll(_sineWave(freq, durationMs: 160));
-      samples.addAll(_silence(durationMs: 60));
+    for (var i = 0; i < 8; i++) {
+      final freq = i.isEven ? 880 : 1108;
+      samples.addAll(_squareWave(freq, durationMs: 180));
+      samples.addAll(_silence(durationMs: 80));
     }
     return samples;
   }
 
-  static List<int> _sineWave(int freq, {required int durationMs}) {
+  static List<int> _squareWave(int freq, {required int durationMs}) {
     const sampleRate = 44100;
     final n = sampleRate * durationMs ~/ 1000;
     final buf = ByteData(n * 2);
     for (var i = 0; i < n; i++) {
-      // Short fade-in/out to avoid clicks.
       final env = i < 256 ? i / 256.0 : (i > n - 256 ? (n - i) / 256.0 : 1.0);
-      final s = (sin(2 * pi * freq * i / sampleRate) * 26000 * env)
-          .round()
-          .clamp(-32768, 32767);
+      final raw = sin(2 * pi * freq * i / sampleRate) >= 0 ? 1.0 : -1.0;
+      final s = (raw * 32767 * env).round().clamp(-32768, 32767);
       buf.setInt16(i * 2, s, Endian.little);
     }
     return buf.buffer.asUint8List().toList();
