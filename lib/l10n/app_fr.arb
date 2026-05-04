@@ -7,7 +7,7 @@
   "statusPaused": "En pause",
   "btnClapToRestart": "Son pour recommencer",
   "btnRestart": "Recommencer",
-  "btnClapToPause": "Son pour pause",
+  "btnClapToPause": "Son pour mettre en pause",
   "btnListeningClapToStart": "À l'écoute : son pour démarrer",
   "btnPause": "Pause",
   "btnStart": "Démarrer",
@@ -17,14 +17,15 @@
   "dialogSet": "Définir",
   "unitMin": "min",
   "unitSec": "sec",
-  "micSensitivity": "SENSIBILITÉ DU MIC",
+  "micSensitivity": "SENSIBILITÉ DU MICRO",
   "sensitivityLow": "Basse",
   "sensitivityHigh": "Haute",
   "selectLanguage": "Choisir la langue",
   "soundTrigger": "Déclencheur sonore",
-  "soundModeAny": "Tout",
+  "soundModeAny": "Tous",
   "soundModeWhistle": "Sifflement",
   "soundModeYell": "Cri",
-  "soundModeVoice": "Cmd Vocale (Ok Time)",
-  "voiceCalibrating": "Calibrage du bruit ambiant..."
+  "soundModeVoice": "Commande Vocale (Ok Time)",
+  "voiceCalibrating": "Démarrage de la reconnaissance vocale...",
+  "voiceBatteryHint": "Consomme plus de batterie que les autres modes"
 }

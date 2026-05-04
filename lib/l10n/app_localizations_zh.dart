@@ -24,16 +24,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get statusPaused => '已暂停';
 
   @override
-  String get btnClapToRestart => '发声重新开始';
+  String get btnClapToRestart => '出声重新开始';
 
   @override
   String get btnRestart => '重新开始';
 
   @override
-  String get btnClapToPause => '发声暂停';
+  String get btnClapToPause => '出声暂停';
 
   @override
-  String get btnListeningClapToStart => '聆听：发声开始';
+  String get btnListeningClapToStart => '监听中：出声开始';
 
   @override
   String get btnPause => '暂停';
@@ -75,7 +75,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get soundTrigger => '声音触发';
 
   @override
-  String get soundModeAny => '任意';
+  String get soundModeAny => '任意声音';
 
   @override
   String get soundModeWhistle => '哨声';
@@ -87,5 +87,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get soundModeVoice => '语音指令 (Ok Time)';
 
   @override
-  String get voiceCalibrating => '正在校准环境噪音...';
+  String get voiceCalibrating => '正在启动语音识别...';
+
+  @override
+  String get voiceBatteryHint => '比其他模式更耗电';
 }

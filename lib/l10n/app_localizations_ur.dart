@@ -9,7 +9,7 @@ class AppLocalizationsUr extends AppLocalizations {
   AppLocalizationsUr([String locale = 'ur']) : super(locale);
 
   @override
-  String get appTitle => 'ہینڈز فری ٹائمر';
+  String get appTitle => 'وائس ٹائمر';
 
   @override
   String get statusDone => 'مکمل!';
@@ -72,7 +72,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get selectLanguage => 'زبان منتخب کریں';
 
   @override
-  String get soundTrigger => 'آواز ٹرگر';
+  String get soundTrigger => 'صوتی اشارہ';
 
   @override
   String get soundModeAny => 'کوئی بھی';
@@ -87,5 +87,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get soundModeVoice => 'وائس کمانڈ (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'ماحولی شور ناپ رہا ہے...';
+  String get voiceCalibrating => 'آواز کی پہچان شروع ہو رہی ہے...';
+
+  @override
+  String get voiceBatteryHint => 'دوسرے موڈ سے زیادہ بیٹری استعمال کرتا ہے';
 }

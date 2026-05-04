@@ -26,5 +26,6 @@
   "soundModeWhistle": "Whistle",
   "soundModeYell": "Yell",
   "soundModeVoice": "Voice Cmd (Ok Time)",
-  "voiceCalibrating": "Calibrating ambient noise..."
+  "voiceCalibrating": "Starting voice recognition...",
+  "voiceBatteryHint": "Uses more battery than other modes"
 }

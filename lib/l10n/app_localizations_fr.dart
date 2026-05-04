@@ -30,7 +30,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get btnRestart => 'Recommencer';
 
   @override
-  String get btnClapToPause => 'Son pour pause';
+  String get btnClapToPause => 'Son pour mettre en pause';
 
   @override
   String get btnListeningClapToStart => 'À l\'écoute : son pour démarrer';
@@ -60,7 +60,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get unitSec => 'sec';
 
   @override
-  String get micSensitivity => 'SENSIBILITÉ DU MIC';
+  String get micSensitivity => 'SENSIBILITÉ DU MICRO';
 
   @override
   String get sensitivityLow => 'Basse';
@@ -75,7 +75,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get soundTrigger => 'Déclencheur sonore';
 
   @override
-  String get soundModeAny => 'Tout';
+  String get soundModeAny => 'Tous';
 
   @override
   String get soundModeWhistle => 'Sifflement';
@@ -84,8 +84,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get soundModeYell => 'Cri';
 
   @override
-  String get soundModeVoice => 'Cmd Vocale (Ok Time)';
+  String get soundModeVoice => 'Commande Vocale (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'Calibrage du bruit ambiant...';
+  String get voiceCalibrating => 'Démarrage de la reconnaissance vocale...';
+
+  @override
+  String get voiceBatteryHint =>
+      'Consomme plus de batterie que les autres modes';
 }

@@ -17,7 +17,7 @@
   "dialogSet": "Definir",
   "unitMin": "min",
   "unitSec": "seg",
-  "micSensitivity": "SENSIBILIDADE DO MIC",
+  "micSensitivity": "SENSIBILIDADE DO MICROFONE",
   "sensitivityLow": "Baixa",
   "sensitivityHigh": "Alta",
   "selectLanguage": "Selecionar Idioma",
@@ -25,6 +25,7 @@
   "soundModeAny": "Qualquer",
   "soundModeWhistle": "Assobio",
   "soundModeYell": "Grito",
-  "soundModeVoice": "Cmd de Voz (Ok Time)",
-  "voiceCalibrating": "Calibrando ruído ambiente..."
+  "soundModeVoice": "Comando de Voz (Ok Time)",
+  "voiceCalibrating": "Iniciando reconhecimento de voz...",
+  "voiceBatteryHint": "Usa mais bateria que os outros modos"
 }

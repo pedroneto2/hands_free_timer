@@ -1,7 +1,7 @@
 {
   "@@locale": "es",
   "appTitle": "Temporizador Manos Libres",
-  "statusDone": "¡Listo!",
+  "statusDone": "¡Terminado!",
   "statusRunning": "En curso",
   "statusReady": "Listo",
   "statusPaused": "Pausado",
@@ -17,7 +17,7 @@
   "dialogSet": "Establecer",
   "unitMin": "min",
   "unitSec": "seg",
-  "micSensitivity": "SENSIBILIDAD DEL MIC",
+  "micSensitivity": "SENSIBILIDAD DEL MICRÓFONO",
   "sensitivityLow": "Baja",
   "sensitivityHigh": "Alta",
   "selectLanguage": "Seleccionar Idioma",
@@ -25,6 +25,7 @@
   "soundModeAny": "Cualquiera",
   "soundModeWhistle": "Silbido",
   "soundModeYell": "Grito",
-  "soundModeVoice": "Cmd de Voz (Ok Time)",
-  "voiceCalibrating": "Calibrando ruido ambiente..."
+  "soundModeVoice": "Comando de Voz (Ok Time)",
+  "voiceCalibrating": "Iniciando reconocimiento de voz...",
+  "voiceBatteryHint": "Usa más batería que otros modos"
 }

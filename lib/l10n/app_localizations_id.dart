@@ -87,5 +87,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get soundModeVoice => 'Perintah Suara (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'Mengukur kebisingan sekitar...';
+  String get voiceCalibrating => 'Memulai pengenalan suara...';
+
+  @override
+  String get voiceBatteryHint =>
+      'Menggunakan lebih banyak baterai dari mode lain';
 }

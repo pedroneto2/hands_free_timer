@@ -9,7 +9,7 @@ class AppLocalizationsBn extends AppLocalizations {
   AppLocalizationsBn([String locale = 'bn']) : super(locale);
 
   @override
-  String get appTitle => 'হ্যান্ডস ফ্রি টাইমার';
+  String get appTitle => 'ভয়েস টাইমার';
 
   @override
   String get statusDone => 'সম্পন্ন!';
@@ -21,7 +21,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get statusReady => 'প্রস্তুত';
 
   @override
-  String get statusPaused => 'বিরতি';
+  String get statusPaused => 'থামানো';
 
   @override
   String get btnClapToRestart => 'শব্দ দিয়ে পুনরায় শুরু';
@@ -30,10 +30,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get btnRestart => 'পুনরায় শুরু';
 
   @override
-  String get btnClapToPause => 'শব্দ দিয়ে বিরতি';
+  String get btnClapToPause => 'শব্দ দিয়ে থামান';
 
   @override
-  String get btnListeningClapToStart => 'শুনছি: শব্দ দিয়ে শুরু';
+  String get btnListeningClapToStart => 'শুনছি: শব্দ দিয়ে শুরু করুন';
 
   @override
   String get btnPause => 'বিরতি দিন';
@@ -87,5 +87,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get soundModeVoice => 'ভয়েস কমান্ড (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'পরিবেশের শব্দ পরিমাপ করছে...';
+  String get voiceCalibrating => 'ভয়েস রিকগনিশন শুরু হচ্ছে...';
+
+  @override
+  String get voiceBatteryHint =>
+      'অন্যান্য মোডের চেয়ে বেশি ব্যাটারি ব্যবহার করে';
 }

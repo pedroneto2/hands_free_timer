@@ -26,5 +26,6 @@
   "soundModeWhistle": "Siulan",
   "soundModeYell": "Teriakan",
   "soundModeVoice": "Perintah Suara (Ok Time)",
-  "voiceCalibrating": "Mengukur kebisingan sekitar..."
+  "voiceCalibrating": "Memulai pengenalan suara...",
+  "voiceBatteryHint": "Menggunakan lebih banyak baterai dari mode lain"
 }

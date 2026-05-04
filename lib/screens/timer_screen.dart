@@ -148,10 +148,19 @@ class _TimerScreenState extends State<TimerScreen>
                   const SizedBox(height: 28),
                   TimerControls(notifier: _notifier, pulseAnimation: _pulseAnimation),
                   const SizedBox(height: 20),
-                  if (_notifier.soundMode != SoundMode.voice) ...[
-                    SensitivitySlider(notifier: _notifier),
-                    const SizedBox(height: 14),
-                  ],
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut,
+                    child: _notifier.soundMode != SoundMode.voice
+                        ? Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SensitivitySlider(notifier: _notifier),
+                              const SizedBox(height: 14),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                   SoundModeSelector(notifier: _notifier),
                   const Spacer(flex: 1),
                 ],

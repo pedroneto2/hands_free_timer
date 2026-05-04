@@ -87,5 +87,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get soundModeVoice => 'Voice Cmd (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'Calibrating ambient noise...';
+  String get voiceCalibrating => 'Starting voice recognition...';
+
+  @override
+  String get voiceBatteryHint => 'Uses more battery than other modes';
 }

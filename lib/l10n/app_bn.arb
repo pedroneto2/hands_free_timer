@@ -1,14 +1,14 @@
 {
   "@@locale": "bn",
-  "appTitle": "হ্যান্ডস ফ্রি টাইমার",
+  "appTitle": "ভয়েস টাইমার",
   "statusDone": "সম্পন্ন!",
   "statusRunning": "চলছে",
   "statusReady": "প্রস্তুত",
-  "statusPaused": "বিরতি",
+  "statusPaused": "থামানো",
   "btnClapToRestart": "শব্দ দিয়ে পুনরায় শুরু",
   "btnRestart": "পুনরায় শুরু",
-  "btnClapToPause": "শব্দ দিয়ে বিরতি",
-  "btnListeningClapToStart": "শুনছি: শব্দ দিয়ে শুরু",
+  "btnClapToPause": "শব্দ দিয়ে থামান",
+  "btnListeningClapToStart": "শুনছি: শব্দ দিয়ে শুরু করুন",
   "btnPause": "বিরতি দিন",
   "btnStart": "শুরু করুন",
   "presetCustom": "কাস্টম",
@@ -26,5 +26,6 @@
   "soundModeWhistle": "শিস",
   "soundModeYell": "চিৎকার",
   "soundModeVoice": "ভয়েস কমান্ড (Ok Time)",
-  "voiceCalibrating": "পরিবেশের শব্দ পরিমাপ করছে..."
+  "voiceCalibrating": "ভয়েস রিকগনিশন শুরু হচ্ছে...",
+  "voiceBatteryHint": "অন্যান্য মোডের চেয়ে বেশি ব্যাটারি ব্যবহার করে"
 }

@@ -274,8 +274,14 @@ abstract class AppLocalizations {
   /// No description provided for @voiceCalibrating.
   ///
   /// In en, this message translates to:
-  /// **'Calibrating ambient noise...'**
+  /// **'Starting voice recognition...'**
   String get voiceCalibrating;
+
+  /// No description provided for @voiceBatteryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Uses more battery than other modes'**
+  String get voiceBatteryHint;
 }
 
 class _AppLocalizationsDelegate

@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appTitle => 'مؤقت اليدين الحرتين';
+  String get appTitle => 'مؤقت صوتي';
 
   @override
   String get statusDone => 'انتهى!';
@@ -24,16 +24,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get statusPaused => 'متوقف مؤقتاً';
 
   @override
-  String get btnClapToRestart => 'صوت لإعادة البدء';
+  String get btnClapToRestart => 'صوت لإعادة التشغيل';
 
   @override
-  String get btnRestart => 'إعادة البدء';
+  String get btnRestart => 'إعادة التشغيل';
 
   @override
   String get btnClapToPause => 'صوت للإيقاف المؤقت';
 
   @override
-  String get btnListeningClapToStart => 'يستمع: صوت للبدء';
+  String get btnListeningClapToStart => 'يستمع: صوت للتشغيل';
 
   @override
   String get btnPause => 'إيقاف مؤقت';
@@ -72,7 +72,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectLanguage => 'اختر اللغة';
 
   @override
-  String get soundTrigger => 'مشغّل الصوت';
+  String get soundTrigger => 'محفّز الصوت';
 
   @override
   String get soundModeAny => 'أي صوت';
@@ -87,5 +87,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get soundModeVoice => 'أمر صوتي (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'جارٍ قياس الضوضاء المحيطة...';
+  String get voiceCalibrating => 'جارٍ بدء التعرف على الصوت...';
+
+  @override
+  String get voiceBatteryHint => 'يستهلك بطارية أكثر من الأوضاع الأخرى';
 }

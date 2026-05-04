@@ -1,8 +1,8 @@
 {
   "@@locale": "pt",
-  "appTitle": "Timer Mãos Livres",
+  "appTitle": "Temporizador por Voz",
   "statusDone": "Feito!",
-  "statusRunning": "Rodando",
+  "statusRunning": "A correr",
   "statusReady": "Pronto",
   "statusPaused": "Pausado",
   "btnClapToRestart": "Som para reiniciar",
@@ -17,7 +17,7 @@
   "dialogSet": "Definir",
   "unitMin": "min",
   "unitSec": "seg",
-  "micSensitivity": "SENSIBILIDADE DO MIC",
+  "micSensitivity": "SENSIBILIDADE DO MICROFONE",
   "sensitivityLow": "Baixa",
   "sensitivityHigh": "Alta",
   "selectLanguage": "Selecionar Idioma",
@@ -25,6 +25,7 @@
   "soundModeAny": "Qualquer",
   "soundModeWhistle": "Assobio",
   "soundModeYell": "Grito",
-  "soundModeVoice": "Cmd de Voz (Ok Time)",
-  "voiceCalibrating": "Calibrando ruído ambiente..."
+  "soundModeVoice": "Comando de Voz (Ok Time)",
+  "voiceCalibrating": "Iniciando reconhecimento de voz...",
+  "voiceBatteryHint": "Consome mais bateria do que os outros modos"
 }

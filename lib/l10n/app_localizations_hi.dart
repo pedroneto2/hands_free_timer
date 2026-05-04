@@ -9,7 +9,7 @@ class AppLocalizationsHi extends AppLocalizations {
   AppLocalizationsHi([String locale = 'hi']) : super(locale);
 
   @override
-  String get appTitle => 'हैंड्स फ्री टाइमर';
+  String get appTitle => 'वॉयस टाइमर';
 
   @override
   String get statusDone => 'हो गया!';
@@ -24,10 +24,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get statusPaused => 'रुका हुआ';
 
   @override
-  String get btnClapToRestart => 'आवाज़ से पुनः शुरू';
+  String get btnClapToRestart => 'आवाज़ से दोबारा शुरू';
 
   @override
-  String get btnRestart => 'पुनः शुरू';
+  String get btnRestart => 'दोबारा शुरू';
 
   @override
   String get btnClapToPause => 'आवाज़ से रोकें';
@@ -72,7 +72,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get selectLanguage => 'भाषा चुनें';
 
   @override
-  String get soundTrigger => 'ध्वनि ट्रिगर';
+  String get soundTrigger => 'साउंड ट्रिगर';
 
   @override
   String get soundModeAny => 'कोई भी';
@@ -87,5 +87,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get soundModeVoice => 'वॉयस कमांड (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'परिवेश शोर माप रहा है...';
+  String get voiceCalibrating => 'वॉयस पहचान शुरू हो रही है...';
+
+  @override
+  String get voiceBatteryHint => 'अन्य मोड से अधिक बैटरी उपयोग करता है';
 }

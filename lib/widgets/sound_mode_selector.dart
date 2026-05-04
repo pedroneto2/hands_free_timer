@@ -56,6 +56,32 @@ class SoundModeSelector extends StatelessWidget {
         const SizedBox(height: 8),
         // Row 2: Voice Command (Ok Time)
         _VoiceModeButton(notifier: notifier, isSelected: isVoice),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          child: isVoice
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.battery_alert_rounded,
+                        size: 12,
+                        color: cs.onSurfaceVariant,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        l10n.voiceBatteryHint,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: cs.onSurfaceVariant,
+                            ),
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
       ],
     );
   }

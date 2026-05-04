@@ -9,13 +9,13 @@ class AppLocalizationsPt extends AppLocalizations {
   AppLocalizationsPt([String locale = 'pt']) : super(locale);
 
   @override
-  String get appTitle => 'Timer Mãos Livres';
+  String get appTitle => 'Temporizador por Voz';
 
   @override
   String get statusDone => 'Feito!';
 
   @override
-  String get statusRunning => 'Rodando';
+  String get statusRunning => 'A correr';
 
   @override
   String get statusReady => 'Pronto';
@@ -60,7 +60,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get unitSec => 'seg';
 
   @override
-  String get micSensitivity => 'SENSIBILIDADE DO MIC';
+  String get micSensitivity => 'SENSIBILIDADE DO MICROFONE';
 
   @override
   String get sensitivityLow => 'Baixa';
@@ -84,10 +84,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get soundModeYell => 'Grito';
 
   @override
-  String get soundModeVoice => 'Cmd de Voz (Ok Time)';
+  String get soundModeVoice => 'Comando de Voz (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'Calibrando ruído ambiente...';
+  String get voiceCalibrating => 'Iniciando reconhecimento de voz...';
+
+  @override
+  String get voiceBatteryHint => 'Consome mais bateria do que os outros modos';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -146,7 +149,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get unitSec => 'seg';
 
   @override
-  String get micSensitivity => 'SENSIBILIDADE DO MIC';
+  String get micSensitivity => 'SENSIBILIDADE DO MICROFONE';
 
   @override
   String get sensitivityLow => 'Baixa';
@@ -170,8 +173,11 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get soundModeYell => 'Grito';
 
   @override
-  String get soundModeVoice => 'Cmd de Voz (Ok Time)';
+  String get soundModeVoice => 'Comando de Voz (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'Calibrando ruído ambiente...';
+  String get voiceCalibrating => 'Iniciando reconhecimento de voz...';
+
+  @override
+  String get voiceBatteryHint => 'Usa mais bateria que os outros modos';
 }

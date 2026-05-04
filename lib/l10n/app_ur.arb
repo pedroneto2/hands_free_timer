@@ -1,6 +1,6 @@
 {
   "@@locale": "ur",
-  "appTitle": "ہینڈز فری ٹائمر",
+  "appTitle": "وائس ٹائمر",
   "statusDone": "مکمل!",
   "statusRunning": "چل رہا ہے",
   "statusReady": "تیار",
@@ -21,10 +21,11 @@
   "sensitivityLow": "کم",
   "sensitivityHigh": "زیادہ",
   "selectLanguage": "زبان منتخب کریں",
-  "soundTrigger": "آواز ٹرگر",
+  "soundTrigger": "صوتی اشارہ",
   "soundModeAny": "کوئی بھی",
   "soundModeWhistle": "سیٹی",
   "soundModeYell": "چیخ",
   "soundModeVoice": "وائس کمانڈ (Ok Time)",
-  "voiceCalibrating": "ماحولی شور ناپ رہا ہے..."
+  "voiceCalibrating": "آواز کی پہچان شروع ہو رہی ہے...",
+  "voiceBatteryHint": "دوسرے موڈ سے زیادہ بیٹری استعمال کرتا ہے"
 }

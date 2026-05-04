@@ -12,7 +12,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appTitle => 'Temporizador Manos Libres';
 
   @override
-  String get statusDone => '¡Listo!';
+  String get statusDone => '¡Terminado!';
 
   @override
   String get statusRunning => 'En curso';
@@ -60,7 +60,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unitSec => 'seg';
 
   @override
-  String get micSensitivity => 'SENSIBILIDAD DEL MIC';
+  String get micSensitivity => 'SENSIBILIDAD DEL MICRÓFONO';
 
   @override
   String get sensitivityLow => 'Baja';
@@ -84,8 +84,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get soundModeYell => 'Grito';
 
   @override
-  String get soundModeVoice => 'Cmd de Voz (Ok Time)';
+  String get soundModeVoice => 'Comando de Voz (Ok Time)';
 
   @override
-  String get voiceCalibrating => 'Calibrando ruido ambiente...';
+  String get voiceCalibrating => 'Iniciando reconocimiento de voz...';
+
+  @override
+  String get voiceBatteryHint => 'Usa más batería que otros modos';
 }

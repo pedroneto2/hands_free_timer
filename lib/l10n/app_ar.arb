@@ -1,14 +1,14 @@
 {
   "@@locale": "ar",
-  "appTitle": "مؤقت اليدين الحرتين",
+  "appTitle": "مؤقت صوتي",
   "statusDone": "انتهى!",
   "statusRunning": "يعمل",
   "statusReady": "جاهز",
   "statusPaused": "متوقف مؤقتاً",
-  "btnClapToRestart": "صوت لإعادة البدء",
-  "btnRestart": "إعادة البدء",
+  "btnClapToRestart": "صوت لإعادة التشغيل",
+  "btnRestart": "إعادة التشغيل",
   "btnClapToPause": "صوت للإيقاف المؤقت",
-  "btnListeningClapToStart": "يستمع: صوت للبدء",
+  "btnListeningClapToStart": "يستمع: صوت للتشغيل",
   "btnPause": "إيقاف مؤقت",
   "btnStart": "ابدأ",
   "presetCustom": "مخصص",
@@ -21,10 +21,11 @@
   "sensitivityLow": "منخفضة",
   "sensitivityHigh": "عالية",
   "selectLanguage": "اختر اللغة",
-  "soundTrigger": "مشغّل الصوت",
+  "soundTrigger": "محفّز الصوت",
   "soundModeAny": "أي صوت",
   "soundModeWhistle": "صفير",
   "soundModeYell": "صراخ",
   "soundModeVoice": "أمر صوتي (Ok Time)",
-  "voiceCalibrating": "جارٍ قياس الضوضاء المحيطة..."
+  "voiceCalibrating": "جارٍ بدء التعرف على الصوت...",
+  "voiceBatteryHint": "يستهلك بطارية أكثر من الأوضاع الأخرى"
 }
