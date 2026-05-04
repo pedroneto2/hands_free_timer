@@ -8,7 +8,8 @@
       "Read(//home/pedro/.pub-cache/hosted/pub.dev/vosk_flutter-0.3.48/android/**)",
       "Read(//home/pedro/.pub-cache/hosted/pub.dev/vosk_flutter-0.3.48/**)",
       "Bash(flutter gen-l10n *)",
-      "Bash(flutter build *)"
+      "Bash(flutter build *)",
+      "Read(//home/pedro/**)"
     ],
     "additionalDirectories": [
       "/home/pedro/.pub-cache/hosted/pub.dev/vosk_flutter-0.3.48/android"
