@@ -52,6 +52,10 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
+
+    androidResources {
+        noCompress += listOf("zip")
+    }
 }
 
 flutter {
