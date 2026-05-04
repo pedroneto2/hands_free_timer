@@ -82,4 +82,10 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get soundModeYell => 'चिल्लाहट';
+
+  @override
+  String get soundModeVoice => 'वॉयस कमांड (Ok Time)';
+
+  @override
+  String get voiceCalibrating => 'परिवेश शोर माप रहा है...';
 }

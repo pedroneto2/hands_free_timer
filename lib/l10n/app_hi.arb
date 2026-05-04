@@ -24,5 +24,7 @@
   "soundTrigger": "ध्वनि ट्रिगर",
   "soundModeAny": "कोई भी",
   "soundModeWhistle": "सीटी",
-  "soundModeYell": "चिल्लाहट"
+  "soundModeYell": "चिल्लाहट",
+  "soundModeVoice": "वॉयस कमांड (Ok Time)",
+  "voiceCalibrating": "परिवेश शोर माप रहा है..."
 }

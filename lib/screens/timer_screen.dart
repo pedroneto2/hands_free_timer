@@ -4,6 +4,7 @@ import 'package:hands_free_timer/l10n/app_localizations.dart';
 
 import '../main.dart' show timerNotifier, themeModeNotifier, saveThemeMode;
 import '../notifiers/timer_notifier.dart';
+import '../services/sound_detector.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/language_selector.dart';
 import '../widgets/sensitivity_slider.dart';
@@ -36,8 +37,28 @@ class _TimerScreenState extends State<TimerScreen>
     _pulseAnimation = Tween<double>(begin: 1.0, end: 1.04).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
-    _notifier.addListener(_syncAnimation);
+    _notifier.addListener(_onNotifierChange);
     WidgetsBinding.instance.addObserver(this);
+  }
+
+  void _onNotifierChange() {
+    _syncAnimation();
+    final err = _notifier.voiceInitError;
+    if (err != null) {
+      _notifier.clearVoiceInitError();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(err),
+              backgroundColor: Theme.of(context).colorScheme.error,
+              behavior: SnackBarBehavior.floating,
+              duration: const Duration(seconds: 6),
+            ),
+          );
+        }
+      });
+    }
   }
 
   void _syncAnimation() {
@@ -54,10 +75,8 @@ class _TimerScreenState extends State<TimerScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.hidden ||
         state == AppLifecycleState.paused) {
-      // Window hidden or screen off — stop animation to save CPU/GPU.
       _pulseController.stop();
     } else if (state == AppLifecycleState.resumed) {
-      // Window visible again — restore animation if needed.
       _syncAnimation();
     }
   }
@@ -65,7 +84,7 @@ class _TimerScreenState extends State<TimerScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _notifier.removeListener(_syncAnimation);
+    _notifier.removeListener(_onNotifierChange);
     _pulseController.dispose();
     super.dispose();
   }
@@ -117,23 +136,70 @@ class _TimerScreenState extends State<TimerScreen>
         bottomNavigationBar: const SafeArea(
           child: BannerAdWidget(),
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              const Spacer(flex: 2),
-              TimerDisplay(notifier: _notifier, pulseAnimation: _pulseAnimation),
-              const SizedBox(height: 28),
-              TimerPresets(notifier: _notifier),
-              const SizedBox(height: 28),
-              TimerControls(notifier: _notifier, pulseAnimation: _pulseAnimation),
-              const SizedBox(height: 20),
-              SensitivitySlider(notifier: _notifier),
-              const SizedBox(height: 14),
-              SoundModeSelector(notifier: _notifier),
-              const Spacer(flex: 1),
-            ],
-          ),
+        body: Stack(
+          children: [
+            SafeArea(
+              child: Column(
+                children: [
+                  const Spacer(flex: 2),
+                  TimerDisplay(notifier: _notifier, pulseAnimation: _pulseAnimation),
+                  const SizedBox(height: 28),
+                  TimerPresets(notifier: _notifier),
+                  const SizedBox(height: 28),
+                  TimerControls(notifier: _notifier, pulseAnimation: _pulseAnimation),
+                  const SizedBox(height: 20),
+                  if (_notifier.soundMode != SoundMode.voice) ...[
+                    SensitivitySlider(notifier: _notifier),
+                    const SizedBox(height: 14),
+                  ],
+                  SoundModeSelector(notifier: _notifier),
+                  const Spacer(flex: 1),
+                ],
+              ),
+            ),
+            if (_notifier.isCalibrating)
+              Positioned.fill(
+                child: AbsorbPointer(
+                  child: ColoredBox(
+                    color: Colors.black.withValues(alpha: 0.55),
+                    child: Center(child: _CalibrationModal()),
+                  ),
+                ),
+              ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class _CalibrationModal extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 40),
+      padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 32),
+      decoration: BoxDecoration(
+        color: cs.surface,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircularProgressIndicator(color: cs.primary, strokeWidth: 3),
+          const SizedBox(height: 24),
+          Text(
+            l10n.voiceCalibrating,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: cs.onSurface,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ],
       ),
     );
   }

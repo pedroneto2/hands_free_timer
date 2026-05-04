@@ -82,4 +82,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get soundModeYell => 'صراخ';
+
+  @override
+  String get soundModeVoice => 'أمر صوتي (Ok Time)';
+
+  @override
+  String get voiceCalibrating => 'جارٍ قياس الضوضاء المحيطة...';
 }

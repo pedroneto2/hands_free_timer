@@ -82,4 +82,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get soundModeYell => 'Grito';
+
+  @override
+  String get soundModeVoice => 'Cmd de Voz (Ok Time)';
+
+  @override
+  String get voiceCalibrating => 'Calibrando ruido ambiente...';
 }

@@ -24,5 +24,7 @@
   "soundTrigger": "শব্দ ট্রিগার",
   "soundModeAny": "যেকোনো",
   "soundModeWhistle": "শিস",
-  "soundModeYell": "চিৎকার"
+  "soundModeYell": "চিৎকার",
+  "soundModeVoice": "ভয়েস কমান্ড (Ok Time)",
+  "voiceCalibrating": "পরিবেশের শব্দ পরিমাপ করছে..."
 }

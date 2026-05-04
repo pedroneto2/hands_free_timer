@@ -24,5 +24,7 @@
   "soundTrigger": "Gatilho de som",
   "soundModeAny": "Qualquer",
   "soundModeWhistle": "Assobio",
-  "soundModeYell": "Grito"
+  "soundModeYell": "Grito",
+  "soundModeVoice": "Cmd de Voz (Ok Time)",
+  "voiceCalibrating": "Calibrando ruído ambiente..."
 }

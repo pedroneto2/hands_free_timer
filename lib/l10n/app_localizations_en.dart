@@ -82,4 +82,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get soundModeYell => 'Yell';
+
+  @override
+  String get soundModeVoice => 'Voice Cmd (Ok Time)';
+
+  @override
+  String get voiceCalibrating => 'Calibrating ambient noise...';
 }

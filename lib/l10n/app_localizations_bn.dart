@@ -82,4 +82,10 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get soundModeYell => 'চিৎকার';
+
+  @override
+  String get soundModeVoice => 'ভয়েস কমান্ড (Ok Time)';
+
+  @override
+  String get voiceCalibrating => 'পরিবেশের শব্দ পরিমাপ করছে...';
 }

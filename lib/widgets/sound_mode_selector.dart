@@ -13,6 +13,7 @@ class SoundModeSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final l10n = AppLocalizations.of(context)!;
+    final isVoice = notifier.soundMode == SoundMode.voice;
 
     return Column(
       children: [
@@ -23,6 +24,7 @@ class SoundModeSelector extends StatelessWidget {
               ),
         ),
         const SizedBox(height: 8),
+        // Row 1: Any | Whistle | Yell
         SegmentedButton<SoundMode>(
           style: SegmentedButton.styleFrom(
             visualDensity: VisualDensity.compact,
@@ -44,10 +46,60 @@ class SoundModeSelector extends StatelessWidget {
               label: Text(l10n.soundModeYell),
             ),
           ],
-          selected: {notifier.soundMode},
-          onSelectionChanged: (modes) => notifier.setSoundMode(modes.first),
+          // When voice mode is active, none of these three are selected.
+          selected: isVoice ? const <SoundMode>{} : {notifier.soundMode},
+          emptySelectionAllowed: true,
+          onSelectionChanged: (modes) {
+            if (modes.isNotEmpty) notifier.setSoundMode(modes.first);
+          },
         ),
+        const SizedBox(height: 8),
+        // Row 2: Voice Command (Ok Time)
+        _VoiceModeButton(notifier: notifier, isSelected: isVoice),
       ],
+    );
+  }
+}
+
+class _VoiceModeButton extends StatelessWidget {
+  final TimerNotifier notifier;
+  final bool isSelected;
+
+  const _VoiceModeButton({
+    required this.notifier,
+    required this.isSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+
+    return OutlinedButton.icon(
+      onPressed: () => notifier.setSoundMode(SoundMode.voice),
+      icon: Icon(
+        Icons.mic_rounded,
+        size: 18,
+        color: isSelected ? cs.primary : cs.onSurfaceVariant,
+      ),
+      label: Text(
+        l10n.soundModeVoice,
+        style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w500,
+          color: isSelected ? cs.primary : cs.onSurfaceVariant,
+        ),
+      ),
+      style: OutlinedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        side: BorderSide(
+          color: isSelected ? cs.primary : cs.outlineVariant,
+          width: isSelected ? 2 : 1,
+        ),
+        backgroundColor:
+            isSelected ? cs.primary.withValues(alpha: 0.12) : null,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
     );
   }
 }

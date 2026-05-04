@@ -24,5 +24,7 @@
   "soundTrigger": "مشغّل الصوت",
   "soundModeAny": "أي صوت",
   "soundModeWhistle": "صفير",
-  "soundModeYell": "صراخ"
+  "soundModeYell": "صراخ",
+  "soundModeVoice": "أمر صوتي (Ok Time)",
+  "voiceCalibrating": "جارٍ قياس الضوضاء المحيطة..."
 }

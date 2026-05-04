@@ -1,0 +1,8 @@
+Coloque aqui o arquivo ZIP do modelo Vosk:
+
+  vosk-model-small-en-us-0.15.zip  (~40 MB)
+
+Download: https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip
+
+O modelo é extraído automaticamente para o dispositivo na primeira execucao.
+Nao extraia o zip — coloque o .zip diretamente nesta pasta.

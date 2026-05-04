@@ -24,5 +24,7 @@
   "soundTrigger": "آواز ٹرگر",
   "soundModeAny": "کوئی بھی",
   "soundModeWhistle": "سیٹی",
-  "soundModeYell": "چیخ"
+  "soundModeYell": "چیخ",
+  "soundModeVoice": "وائس کمانڈ (Ok Time)",
+  "voiceCalibrating": "ماحولی شور ناپ رہا ہے..."
 }

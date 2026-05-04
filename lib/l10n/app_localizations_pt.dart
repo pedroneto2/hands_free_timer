@@ -82,6 +82,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get soundModeYell => 'Grito';
+
+  @override
+  String get soundModeVoice => 'Cmd de Voz (Ok Time)';
+
+  @override
+  String get voiceCalibrating => 'Calibrando ruído ambiente...';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -162,4 +168,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get soundModeYell => 'Grito';
+
+  @override
+  String get soundModeVoice => 'Cmd de Voz (Ok Time)';
+
+  @override
+  String get voiceCalibrating => 'Calibrando ruído ambiente...';
 }

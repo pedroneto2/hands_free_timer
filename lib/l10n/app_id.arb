@@ -24,5 +24,7 @@
   "soundTrigger": "Pemicu suara",
   "soundModeAny": "Apa saja",
   "soundModeWhistle": "Siulan",
-  "soundModeYell": "Teriakan"
+  "soundModeYell": "Teriakan",
+  "soundModeVoice": "Perintah Suara (Ok Time)",
+  "voiceCalibrating": "Mengukur kebisingan sekitar..."
 }

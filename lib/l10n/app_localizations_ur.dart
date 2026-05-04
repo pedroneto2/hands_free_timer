@@ -82,4 +82,10 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get soundModeYell => 'چیخ';
+
+  @override
+  String get soundModeVoice => 'وائس کمانڈ (Ok Time)';
+
+  @override
+  String get voiceCalibrating => 'ماحولی شور ناپ رہا ہے...';
 }

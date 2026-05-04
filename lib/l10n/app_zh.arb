@@ -24,5 +24,7 @@
   "soundTrigger": "声音触发",
   "soundModeAny": "任意",
   "soundModeWhistle": "哨声",
-  "soundModeYell": "呼喊"
+  "soundModeYell": "呼喊",
+  "soundModeVoice": "语音指令 (Ok Time)",
+  "voiceCalibrating": "正在校准环境噪音..."
 }

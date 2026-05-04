@@ -82,4 +82,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get soundModeYell => '呼喊';
+
+  @override
+  String get soundModeVoice => '语音指令 (Ok Time)';
+
+  @override
+  String get voiceCalibrating => '正在校准环境噪音...';
 }

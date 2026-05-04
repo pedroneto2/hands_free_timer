@@ -6,7 +6,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-enum SoundMode { any, whistle, yell }
+enum SoundMode { any, whistle, yell, voice }
 
 class SoundDetector {
   // Mutable so TimerNotifier can update it live while the detector is running.
@@ -101,6 +101,8 @@ class SoundDetector {
 
   bool _passesMode(Int16List samples) {
     if (soundMode == SoundMode.any) return true;
+    // voice mode is handled by VoiceCommandDetector, not this detector
+    if (soundMode == SoundMode.voice) return false;
     if (samples.length < 16) return false;
     final (:avgZcr, :variance, :spread) = _zcrStats(samples);
     return switch (soundMode) {
@@ -120,7 +122,7 @@ class SoundDetector {
           avgZcr <= 0.18 &&
           variance >= 0.0005 &&
           variance < 0.020,
-      SoundMode.any => true,
+      SoundMode.any || SoundMode.voice => true,
     };
   }
 

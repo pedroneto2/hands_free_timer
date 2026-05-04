@@ -264,6 +264,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yell'**
   String get soundModeYell;
+
+  /// No description provided for @soundModeVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice Cmd (Ok Time)'**
+  String get soundModeVoice;
+
+  /// No description provided for @voiceCalibrating.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibrating ambient noise...'**
+  String get voiceCalibrating;
 }
 
 class _AppLocalizationsDelegate

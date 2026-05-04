@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter analyze *)",
+      "mcp__claude_ai_Context7__resolve-library-id",
+      "Bash(dart pub *)",
+      "Read(//home/pedro/.pub-cache/hosted/pub.dev/vosk_flutter-0.3.48/lib/**)",
+      "Read(//home/pedro/.pub-cache/hosted/pub.dev/vosk_flutter-0.3.48/android/**)",
+      "Read(//home/pedro/.pub-cache/hosted/pub.dev/vosk_flutter-0.3.48/**)"
+    ],
+    "additionalDirectories": [
+      "/home/pedro/.pub-cache/hosted/pub.dev/vosk_flutter-0.3.48/android"
+    ]
+  }
+}

@@ -24,5 +24,7 @@
   "soundTrigger": "Sound trigger",
   "soundModeAny": "Any",
   "soundModeWhistle": "Whistle",
-  "soundModeYell": "Yell"
+  "soundModeYell": "Yell",
+  "soundModeVoice": "Voice Cmd (Ok Time)",
+  "voiceCalibrating": "Calibrating ambient noise..."
 }

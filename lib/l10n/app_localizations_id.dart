@@ -82,4 +82,10 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get soundModeYell => 'Teriakan';
+
+  @override
+  String get soundModeVoice => 'Perintah Suara (Ok Time)';
+
+  @override
+  String get voiceCalibrating => 'Mengukur kebisingan sekitar...';
 }

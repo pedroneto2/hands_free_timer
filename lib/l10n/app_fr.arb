@@ -24,5 +24,7 @@
   "soundTrigger": "Déclencheur sonore",
   "soundModeAny": "Tout",
   "soundModeWhistle": "Sifflement",
-  "soundModeYell": "Cri"
+  "soundModeYell": "Cri",
+  "soundModeVoice": "Cmd Vocale (Ok Time)",
+  "voiceCalibrating": "Calibrage du bruit ambiant..."
 }

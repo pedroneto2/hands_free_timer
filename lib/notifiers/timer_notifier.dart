@@ -10,6 +10,7 @@ import '../services/foreground_timer_service.dart';
 import '../services/notification_service.dart';
 import '../services/sound_detector.dart';
 import '../services/sound_player.dart';
+import '../services/voice_command_detector.dart';
 
 enum TimerStatus { ready, running, paused, completed }
 
@@ -34,7 +35,11 @@ class TimerNotifier extends ChangeNotifier {
   double _sensitivity = 0.8;
   SoundMode _soundMode = SoundMode.any;
 
+  bool _isCalibrating = false;
+  String? _voiceInitError;
+
   final SoundDetector _detector = SoundDetector();
+  final VoiceCommandDetector _voiceDetector = VoiceCommandDetector();
 
   int get selectedPreset => _selectedPreset;
   int? get customSeconds => _customSeconds;
@@ -43,10 +48,22 @@ class TimerNotifier extends ChangeNotifier {
   bool get soundActivated => _soundActivated;
   double get sensitivity => _sensitivity;
   SoundMode get soundMode => _soundMode;
+  bool get isCalibrating => _isCalibrating;
+  String? get voiceInitError => _voiceInitError;
+
+  void clearVoiceInitError() {
+    _voiceInitError = null;
+  }
 
   void setSoundMode(SoundMode mode) {
+    if (_soundMode == mode) return;
     _soundMode = mode;
-    _detector.soundMode = mode;
+    if (mode != SoundMode.voice) {
+      _detector.soundMode = mode;
+    }
+    if (_soundActivated) {
+      _restartActiveDetector();
+    }
     notifyListeners();
   }
 
@@ -169,6 +186,7 @@ class TimerNotifier extends ChangeNotifier {
 
   void _start() {
     _detector.suppress(const Duration(milliseconds: 800));
+    _voiceDetector.suppress(const Duration(milliseconds: 800));
     _isRunning = true;
     notifyListeners();
     _saveRunningState();
@@ -206,6 +224,7 @@ class TimerNotifier extends ChangeNotifier {
     _timer?.cancel();
     // Suppress mic for 4 s so the completion chime doesn't re-trigger the detector.
     _detector.suppress(const Duration(seconds: 4));
+    _voiceDetector.suppress(const Duration(seconds: 4));
     SoundPlayer.playCompletionAlert();
     HapticFeedback.heavyImpact();
     Future.delayed(const Duration(milliseconds: 300), HapticFeedback.heavyImpact);
@@ -222,7 +241,9 @@ class TimerNotifier extends ChangeNotifier {
   Future<void> toggleSoundActivation() async {
     if (_soundActivated) {
       await _detector.stop();
+      await _voiceDetector.stop();
       _soundActivated = false;
+      _isCalibrating = false;
     } else {
       if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
         final status = await Permission.microphone.request();
@@ -232,16 +253,53 @@ class TimerNotifier extends ChangeNotifier {
         }
       }
       _soundActivated = true;
-      _detector.threshold = _rmsThreshold;
-      await _detector.start(startPause);
+      if (_soundMode == SoundMode.voice) {
+        await _startVoiceDetector();
+      } else {
+        _detector.threshold = _rmsThreshold;
+        _detector.soundMode = _soundMode;
+        await _detector.start(startPause);
+      }
     }
     notifyListeners();
+  }
+
+  Future<void> _startVoiceDetector() async {
+    _isCalibrating = true;
+    notifyListeners();
+    await _voiceDetector.start(
+      onDetected: startPause,
+      onCalibrationDone: () {
+        _isCalibrating = false;
+        notifyListeners();
+      },
+      onError: (msg) {
+        _voiceInitError = msg;
+        _soundActivated = false;
+        _isCalibrating = false;
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> _restartActiveDetector() async {
+    await _detector.stop();
+    await _voiceDetector.stop();
+    _isCalibrating = false;
+    if (_soundMode == SoundMode.voice) {
+      await _startVoiceDetector();
+    } else {
+      _detector.threshold = _rmsThreshold;
+      _detector.soundMode = _soundMode;
+      await _detector.start(startPause);
+    }
   }
 
   @override
   void dispose() {
     _timer?.cancel();
     _detector.dispose();
+    _voiceDetector.dispose();
     super.dispose();
   }
 }
