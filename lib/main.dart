@@ -15,6 +15,7 @@ import 'services/notification_service.dart';
 
 final localeNotifier = ValueNotifier<Locale>(const Locale('en'));
 final themeModeNotifier = ValueNotifier<ThemeMode>(ThemeMode.dark);
+final wakelockNotifier = ValueNotifier<bool>(false);
 final timerNotifier = TimerNotifier();
 final navigatorKey = GlobalKey<NavigatorState>();
 AppOpenAdManager? appOpenAdManager;
@@ -23,6 +24,7 @@ bool get isMobilePlatform =>
     !kIsWeb && (Platform.isAndroid || Platform.isIOS);
 
 const _themeKey = 'theme_mode';
+const _wakelockKey = 'wakelock_enabled';
 
 Future<void> _loadTheme() async {
   final prefs = await SharedPreferences.getInstance();
@@ -36,9 +38,20 @@ Future<void> saveThemeMode(ThemeMode mode) async {
   await prefs.setString(_themeKey, mode == ThemeMode.light ? 'light' : 'dark');
 }
 
+Future<void> _loadWakelock() async {
+  final prefs = await SharedPreferences.getInstance();
+  wakelockNotifier.value = prefs.getBool(_wakelockKey) ?? false;
+}
+
+Future<void> saveWakelock(bool enabled) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool(_wakelockKey, enabled);
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _loadTheme();
+  await _loadWakelock();
   ForegroundTimerService.init();
   await NotificationService.init();
   await timerNotifier.initFromSaved();

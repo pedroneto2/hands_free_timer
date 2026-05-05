@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:hands_free_timer/l10n/app_localizations.dart';
 
-import '../main.dart' show timerNotifier, themeModeNotifier, saveThemeMode;
+import '../main.dart'
+    show timerNotifier, themeModeNotifier, saveThemeMode, wakelockNotifier, saveWakelock;
 import '../notifiers/timer_notifier.dart';
 import '../services/sound_detector.dart';
 import '../widgets/banner_ad_widget.dart';
@@ -20,6 +22,8 @@ class TimerScreen extends StatefulWidget {
   State<TimerScreen> createState() => _TimerScreenState();
 }
 
+const _screenChannel = MethodChannel('hands_free_timer/screen');
+
 class _TimerScreenState extends State<TimerScreen>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late final TimerNotifier _notifier;
@@ -30,6 +34,7 @@ class _TimerScreenState extends State<TimerScreen>
   void initState() {
     super.initState();
     _notifier = timerNotifier;
+    _screenChannel.invokeMethod('setKeepBright', wakelockNotifier.value);
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 900),
@@ -110,12 +115,27 @@ class _TimerScreenState extends State<TimerScreen>
                 ),
           ),
           actions: [
+            ValueListenableBuilder<bool>(
+              valueListenable: wakelockNotifier,
+              builder: (context, enabled, _) => IconButton(
+                icon: Icon(
+                  enabled
+                      ? Icons.wb_sunny_rounded
+                      : Icons.bedtime_rounded,
+                ),
+                onPressed: () {
+                  final next = !enabled;
+                  wakelockNotifier.value = next;
+                  _screenChannel.invokeMethod('setKeepBright', next);
+                  saveWakelock(next);
+                },
+                color: enabled ? cs.primary : cs.onSurfaceVariant,
+              ),
+            ),
             ValueListenableBuilder<ThemeMode>(
               valueListenable: themeModeNotifier,
               builder: (context, themeMode, _) => IconButton(
-                icon: Icon(themeMode == ThemeMode.light
-                    ? Icons.dark_mode_rounded
-                    : Icons.light_mode_rounded),
+                icon: const Icon(Icons.contrast_rounded),
                 onPressed: () {
                   final next = themeMode == ThemeMode.light
                       ? ThemeMode.dark
