@@ -60,6 +60,15 @@ android {
     androidResources {
         noCompress += listOf("zip")
     }
+
+    // Workaround: store native libs compressed so Play Store static analysis
+    // doesn't flag unaligned .so files from vosk-android while upstream fixes
+    // the 16 KB alignment. Remove once vosk-android ships aligned binaries.
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
 }
 
 flutter {
