@@ -16,6 +16,19 @@ import 'services/notification_service.dart';
 final localeNotifier = ValueNotifier<Locale>(const Locale('en'));
 final themeModeNotifier = ValueNotifier<ThemeMode>(ThemeMode.dark);
 final wakelockNotifier = ValueNotifier<bool>(false);
+
+final _lightTheme = ThemeData(
+  colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6C63FF)),
+  useMaterial3: true,
+);
+
+final _darkTheme = ThemeData(
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: const Color(0xFF6C63FF),
+    brightness: Brightness.dark,
+  ),
+  useMaterial3: true,
+);
 final timerNotifier = TimerNotifier();
 final navigatorKey = GlobalKey<NavigatorState>();
 AppOpenAdManager? appOpenAdManager;
@@ -85,19 +98,8 @@ class HandsFreeTimerApp extends StatelessWidget {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF6C63FF),
-            ),
-            useMaterial3: true,
-          ),
-          darkTheme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF6C63FF),
-              brightness: Brightness.dark,
-            ),
-            useMaterial3: true,
-          ),
+          theme: _lightTheme,
+          darkTheme: _darkTheme,
           themeMode: themeMode,
           home: const TimerScreen(),
         ),

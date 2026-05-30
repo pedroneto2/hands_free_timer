@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart' show HapticFeedback;
+import 'package:flutter/services.dart' show HapticFeedback, MethodChannel;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +16,7 @@ enum TimerStatus { ready, running, paused, completed }
 
 class TimerNotifier extends ChangeNotifier {
   static const List<int> presets = [1, 5, 10, 15, 30];
+  static final Set<int> _kBuiltInSeconds = presets.map((m) => m * 60).toSet();
 
   static const _kEndTimeMs = 'timer_end_ms';
   static const _kTotalSec = 'timer_total_sec';
@@ -23,11 +24,15 @@ class TimerNotifier extends ChangeNotifier {
   static const _kWasPaused = 'timer_was_paused';
   static const _kPreset = 'timer_preset_min';
   static const _kCustomSec = 'timer_custom_sec';
+  static const _kCustomPresets = 'custom_presets_list';
+  static const _kHiddenBuiltIns = 'hidden_builtin_presets';
 
   int _selectedPreset = 10;
   int _totalSeconds = 10 * 60;
   int _remainingSeconds = 10 * 60;
   int? _customSeconds;
+  List<int> _customPresets = [];
+  Set<int> _hiddenBuiltIns = {};
   Timer? _timer;
   bool _isRunning = false;
   bool _isCompleted = false;
@@ -43,6 +48,8 @@ class TimerNotifier extends ChangeNotifier {
 
   int get selectedPreset => _selectedPreset;
   int? get customSeconds => _customSeconds;
+  List<int> get customPresets => List.unmodifiable(_customPresets);
+  Set<int> get hiddenBuiltInPresets => Set.unmodifiable(_hiddenBuiltIns);
   bool get isRunning => _isRunning;
   bool get isCompleted => _isCompleted;
   bool get soundActivated => _soundActivated;
@@ -120,8 +127,55 @@ class TimerNotifier extends ChangeNotifier {
     _isRunning ? pause() : _start();
   }
 
+  Future<void> addCustomPreset(int seconds) async {
+    if (!_kBuiltInSeconds.contains(seconds) && !_customPresets.contains(seconds)) {
+      _customPresets = [..._customPresets, seconds];
+      await _saveCustomPresets();
+    }
+    if (_kBuiltInSeconds.contains(seconds)) {
+      selectPreset(seconds ~/ 60);
+    } else {
+      selectBySeconds(seconds);
+    }
+  }
+
+  Future<void> removeCustomPreset(int seconds) async {
+    _customPresets = _customPresets.where((s) => s != seconds).toList();
+    await _saveCustomPresets();
+    notifyListeners();
+  }
+
+  Future<void> hideBuiltInPreset(int minutes) async {
+    _hiddenBuiltIns = {..._hiddenBuiltIns, minutes};
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+      _kHiddenBuiltIns,
+      _hiddenBuiltIns.map((m) => m.toString()).toList(),
+    );
+    notifyListeners();
+  }
+
+  Future<void> _saveCustomPresets() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+      _kCustomPresets,
+      _customPresets.map((s) => s.toString()).toList(),
+    );
+  }
+
   Future<void> initFromSaved() async {
     final prefs = await SharedPreferences.getInstance();
+
+    final rawPresets = prefs.getStringList(_kCustomPresets);
+    if (rawPresets != null) {
+      _customPresets = rawPresets.map(int.parse).toList();
+    }
+
+    final rawHidden = prefs.getStringList(_kHiddenBuiltIns);
+    if (rawHidden != null) {
+      _hiddenBuiltIns = rawHidden.map(int.parse).toSet();
+    }
+
     final total = prefs.getInt(_kTotalSec);
     if (total == null) return;
 
@@ -185,8 +239,8 @@ class TimerNotifier extends ChangeNotifier {
   }
 
   void _start() {
-    _detector.suppress(const Duration(milliseconds: 800));
-    _voiceDetector.suppress(const Duration(milliseconds: 800));
+    _detector.suppress(const Duration(milliseconds: 2000));
+    _voiceDetector.suppress(const Duration(milliseconds: 2000));
     _isRunning = true;
     notifyListeners();
     _saveRunningState();
@@ -197,8 +251,9 @@ class TimerNotifier extends ChangeNotifier {
         return;
       }
       _remainingSeconds--;
+      final display = timeDisplay;
       notifyListeners();
-      ForegroundTimerService.update(timeDisplay);
+      ForegroundTimerService.update(display);
     });
   }
 
@@ -238,6 +293,28 @@ class TimerNotifier extends ChangeNotifier {
     NotificationService.showTimerComplete(_totalSeconds);
   }
 
+  static const _screenChannel = MethodChannel('hands_free_timer/screen');
+
+  void _wakeScreen() {
+    _screenChannel.invokeMethod('wakeScreen').catchError((_) {});
+  }
+
+  void _onSoundDetected() {
+    _detector.suppress(const Duration(milliseconds: 3000));
+    _voiceDetector.suppress(const Duration(milliseconds: 3000));
+    SoundPlayer.playTriggerFeedback();
+    _wakeScreen();
+    startPause();
+  }
+
+  void _onVoiceReset() {
+    _detector.suppress(const Duration(milliseconds: 3000));
+    _voiceDetector.suppress(const Duration(milliseconds: 3000));
+    SoundPlayer.playTriggerFeedback();
+    _wakeScreen();
+    reset();
+  }
+
   Future<void> toggleSoundActivation() async {
     if (_soundActivated) {
       await _detector.stop();
@@ -258,7 +335,7 @@ class TimerNotifier extends ChangeNotifier {
       } else {
         _detector.threshold = _rmsThreshold;
         _detector.soundMode = _soundMode;
-        await _detector.start(startPause);
+        await _detector.start(_onSoundDetected);
       }
     }
     notifyListeners();
@@ -268,7 +345,8 @@ class TimerNotifier extends ChangeNotifier {
     _isCalibrating = true;
     notifyListeners();
     await _voiceDetector.start(
-      onDetected: startPause,
+      onDetected: _onSoundDetected,
+      onReset: _onVoiceReset,
       onCalibrationDone: () {
         _isCalibrating = false;
         notifyListeners();
@@ -291,7 +369,7 @@ class TimerNotifier extends ChangeNotifier {
     } else {
       _detector.threshold = _rmsThreshold;
       _detector.soundMode = _soundMode;
-      await _detector.start(startPause);
+      await _detector.start(_onSoundDetected);
     }
   }
 

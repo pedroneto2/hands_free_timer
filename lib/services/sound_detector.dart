@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
@@ -14,6 +13,9 @@ class SoundDetector {
   SoundMode soundMode = SoundMode.any;
   static const Duration _debounce = Duration(milliseconds: 1500);
 
+  // Reusable buffer for _zcrStats — avoids a heap allocation per audio chunk.
+  final _zcrs = List<double>.filled(4, 0.0, growable: false);
+
   static const _channel = EventChannel('hands_free_timer/audio_stream');
 
   Process? _process;
@@ -24,7 +26,11 @@ class SoundDetector {
   // Ignore all audio chunks until [duration] has elapsed.
   // Call this before playing any device sound to prevent self-triggering.
   void suppress(Duration duration) {
-    _suppressedUntil = DateTime.now().add(duration);
+    final newUntil = DateTime.now().add(duration);
+    final current = _suppressedUntil;
+    if (current == null || newUntil.isAfter(current)) {
+      _suppressedUntil = newUntil;
+    }
   }
 
   Future<void> start(void Function() onDetected) async {
@@ -42,6 +48,7 @@ class SoundDetector {
       '--rate=16000',
       '--channels=1',
     ]);
+    _process!.stderr.listen((_) {});
     _subscription = _process!.stdout
         .listen((chunk) => _handleChunk(chunk, onDetected));
   }
@@ -58,10 +65,17 @@ class SoundDetector {
   void _handleChunk(List<int> chunk, void Function() onDetected) {
     if (chunk.length < 2) return;
     final now = DateTime.now();
-    if (_suppressedUntil != null && now.isBefore(_suppressedUntil!)) return;
-    final bytes = Uint8List.fromList(chunk);
+    final sup = _suppressedUntil;
+    if (sup != null) {
+      if (now.isBefore(sup)) return;
+      _suppressedUntil = null;
+    }
+    // Avoid copy when the EventChannel already delivers a Uint8List (Android).
+    final bytes = (chunk is Uint8List && chunk.offsetInBytes == 0)
+        ? chunk
+        : Uint8List.fromList(chunk);
     final samples = bytes.buffer.asInt16List();
-    if (_computeRms(samples) > threshold && _passesMode(samples)) {
+    if (_aboveThreshold(samples) && _passesMode(samples)) {
       if (_lastTrigger == null || now.difference(_lastTrigger!) > _debounce) {
         _lastTrigger = now;
         onDetected();
@@ -69,10 +83,15 @@ class SoundDetector {
     }
   }
 
-  double _computeRms(Int16List samples) {
+  bool _aboveThreshold(Int16List samples) {
+    final limit = threshold * threshold * 32768.0 * 32768.0 * samples.length;
     double sum = 0;
-    for (final s in samples) { sum += s * s; }
-    return sqrt(sum / samples.length) / 32768.0;
+    for (int i = 0; i < samples.length; i++) {
+      final s = samples[i];
+      sum += s * s;
+      if (sum > limit) return true;
+    }
+    return false;
   }
 
   // Splits the chunk into 4 sub-frames and computes per-frame ZCR.
@@ -80,23 +99,24 @@ class SoundDetector {
   ({double avgZcr, double variance, double spread}) _zcrStats(Int16List samples) {
     const frames = 4;
     final frameSize = samples.length ~/ frames;
-    final zcrs = List<double>.filled(frames, 0);
     for (int f = 0; f < frames; f++) {
       int crossings = 0;
       final start = f * frameSize;
       for (int i = start + 1; i < start + frameSize; i++) {
         if ((samples[i] >= 0) != (samples[i - 1] >= 0)) crossings++;
       }
-      zcrs[f] = crossings / frameSize;
+      _zcrs[f] = crossings / frameSize;
     }
-    final avg = (zcrs[0] + zcrs[1] + zcrs[2] + zcrs[3]) / frames;
-    final variance = zcrs.fold(0.0, (s, z) => s + (z - avg) * (z - avg)) / frames;
-    double lo = zcrs[0], hi = zcrs[0];
-    for (final z in zcrs) {
-      if (z < lo) lo = z;
-      if (z > hi) hi = z;
+    final avg = (_zcrs[0] + _zcrs[1] + _zcrs[2] + _zcrs[3]) / frames;
+    double varianceSum = 0.0;
+    double lo = _zcrs[0], hi = _zcrs[0];
+    for (int f = 0; f < frames; f++) {
+      final d = _zcrs[f] - avg;
+      varianceSum += d * d;
+      if (_zcrs[f] < lo) lo = _zcrs[f];
+      if (_zcrs[f] > hi) hi = _zcrs[f];
     }
-    return (avgZcr: avg, variance: variance, spread: hi - lo);
+    return (avgZcr: avg, variance: varianceSum / frames, spread: hi - lo);
   }
 
   bool _passesMode(Int16List samples) {
@@ -130,6 +150,7 @@ class SoundDetector {
     await _subscription?.cancel();
     _subscription = null;
     _lastTrigger = null;
+    _suppressedUntil = null;
     _process?.kill();
     _process = null;
   }

@@ -27,5 +27,21 @@
   "soundModeYell": "Grito",
   "soundModeVoice": "Comando de Voz (Ok Time)",
   "voiceCalibrating": "Iniciando reconocimiento de voz...",
-  "voiceBatteryHint": "Usa más batería que otros modos"
+  "voiceBatteryHint": "Usa más batería que otros modos",
+  "helpButton": "Instrucciones",
+  "helpTitle": "Cómo usar",
+  "helpTimerCircleTitle": "Círculo del Temporizador",
+  "helpTimerCircleBody": "Toca el círculo del temporizador para abrir el panel de presets y elegir una duración.",
+  "helpPresetsTitle": "Presets",
+  "helpPresetsBody": "Elige una duración predefinida o añade una personalizada. Toca × para eliminar un preset.",
+  "helpControlsTitle": "Controles",
+  "helpControlsBody": "Pulsa Iniciar para comenzar, Pausar para pausar y Reiniciar para restablecer el temporizador.",
+  "helpSoundTriggerTitle": "Activador de Sonido",
+  "helpSoundTriggerBody": "Activa el micrófono (icono de micrófono) para controlar el temporizador con sonidos. Cualquiera/Silbido/Grito: un sonido detectado inicia o pausa. Comando de Voz: di \"Ok Time\" para iniciar/pausar y \"Ok Reset\" para reiniciar.",
+  "helpSensitivityTitle": "Sensibilidad del Micrófono",
+  "helpSensitivityBody": "Ajusta la sensibilidad del micrófono. Baja ignora el ruido de fondo; Alta reacciona a sonidos más suaves. No disponible en modo Comando de Voz.",
+  "helpScreenTitle": "Brillo de Pantalla",
+  "helpScreenBody": "El icono de sol/luna mantiene la pantalla encendida mientras el temporizador está activo. Los activadores de sonido también restauran el brillo automáticamente.",
+  "helpLanguageTitle": "Idioma y Tema",
+  "helpLanguageBody": "Toca el icono de idioma para cambiar el idioma de la app. Toca el icono de contraste para alternar entre el tema claro y oscuro."
 }

@@ -91,4 +91,59 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get voiceBatteryHint => 'دوسرے موڈ سے زیادہ بیٹری استعمال کرتا ہے';
+
+  @override
+  String get helpButton => 'ہدایات';
+
+  @override
+  String get helpTitle => 'استعمال کا طریقہ';
+
+  @override
+  String get helpTimerCircleTitle => 'ٹائمر دائرہ';
+
+  @override
+  String get helpTimerCircleBody =>
+      'پری سیٹ پینل کھولنے اور مدت منتخب کرنے کے لیے ٹائمر دائرے پر ٹیپ کریں۔';
+
+  @override
+  String get helpPresetsTitle => 'پری سیٹس';
+
+  @override
+  String get helpPresetsBody =>
+      'پہلے سے طے شدہ مدت منتخب کریں یا کسٹم شامل کریں۔ پری سیٹ ہٹانے کے لیے × ٹیپ کریں۔';
+
+  @override
+  String get helpControlsTitle => 'کنٹرولز';
+
+  @override
+  String get helpControlsBody =>
+      'شروع کرنے کے لیے Start، رکنے کے لیے Pause اور ٹائمر ری سیٹ کرنے کے لیے Restart دبائیں۔';
+
+  @override
+  String get helpSoundTriggerTitle => 'صوتی اشارہ';
+
+  @override
+  String get helpSoundTriggerBody =>
+      'مائیک (مائیک آئیکن) فعال کریں تاکہ آواز سے ٹائمر کنٹرول ہو۔ کوئی بھی/سیٹی/چیخ: پکڑی گئی آواز شروع یا روکتی ہے۔ وائس کمانڈ: شروع/رکنے کے لیے \"Ok Time\" اور ری سیٹ کے لیے \"Ok Reset\" کہیں۔';
+
+  @override
+  String get helpSensitivityTitle => 'مائیک حساسیت';
+
+  @override
+  String get helpSensitivityBody =>
+      'مائیک کی حساسیت ترتیب دیں۔ کم پس منظر کا شور نظرانداز کرتا ہے؛ زیادہ ہلکی آوازوں پر ردعمل دیتا ہے۔ وائس کمانڈ موڈ میں دستیاب نہیں۔';
+
+  @override
+  String get helpScreenTitle => 'اسکرین کی روشنی';
+
+  @override
+  String get helpScreenBody =>
+      'سورج/چاند آئیکن ٹائمر فعال رہنے کے دوران اسکرین چالو رکھتا ہے۔ صوتی اشارے خودبخود روشنی بحال کرتے ہیں۔';
+
+  @override
+  String get helpLanguageTitle => 'زبان اور تھیم';
+
+  @override
+  String get helpLanguageBody =>
+      'ایپ کی زبان تبدیل کرنے کے لیے زبان کا آئیکن ٹیپ کریں۔ ہلکے اور گہرے تھیم کے درمیان ٹوگل کرنے کے لیے کنٹراسٹ آئیکن ٹیپ کریں۔';
 }

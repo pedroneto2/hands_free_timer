@@ -27,5 +27,21 @@
   "soundModeYell": "Teriakan",
   "soundModeVoice": "Perintah Suara (Ok Time)",
   "voiceCalibrating": "Memulai pengenalan suara...",
-  "voiceBatteryHint": "Menggunakan lebih banyak baterai dari mode lain"
+  "voiceBatteryHint": "Menggunakan lebih banyak baterai dari mode lain",
+  "helpButton": "Panduan",
+  "helpTitle": "Cara penggunaan",
+  "helpTimerCircleTitle": "Lingkaran Timer",
+  "helpTimerCircleBody": "Ketuk lingkaran timer untuk membuka panel preset dan memilih durasi.",
+  "helpPresetsTitle": "Preset",
+  "helpPresetsBody": "Pilih durasi yang telah ditentukan atau tambahkan yang kustom. Ketuk × untuk menghapus preset.",
+  "helpControlsTitle": "Kontrol",
+  "helpControlsBody": "Tekan Mulai untuk memulai, Jeda untuk menjeda, dan Mulai ulang untuk mengatur ulang timer.",
+  "helpSoundTriggerTitle": "Pemicu Suara",
+  "helpSoundTriggerBody": "Aktifkan mikrofon (ikon mic) agar suara dapat mengontrol timer. Apa saja/Siulan/Teriakan: suara yang terdeteksi memulai atau menjeda. Perintah Suara: ucapkan \"Ok Time\" untuk mulai/jeda dan \"Ok Reset\" untuk mengatur ulang.",
+  "helpSensitivityTitle": "Sensitivitas Mikrofon",
+  "helpSensitivityBody": "Sesuaikan sensitivitas mikrofon. Rendah mengabaikan kebisingan latar; Tinggi bereaksi terhadap suara lebih pelan. Tidak tersedia dalam mode Perintah Suara.",
+  "helpScreenTitle": "Kecerahan Layar",
+  "helpScreenBody": "Ikon matahari/bulan menjaga layar tetap menyala selama timer aktif. Pemicu suara juga memulihkan kecerahan secara otomatis.",
+  "helpLanguageTitle": "Bahasa & Tema",
+  "helpLanguageBody": "Ketuk ikon bahasa untuk mengganti bahasa aplikasi. Ketuk ikon kontras untuk beralih antara tema terang dan gelap."
 }

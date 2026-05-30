@@ -5,7 +5,23 @@ import 'package:flutter/foundation.dart';
 
 class SoundPlayer {
   static Uint8List? _cachedWav;
+  static Uint8List? _cachedTriggerWav;
   static final _player = AudioPlayer();
+  static final _triggerPlayer = AudioPlayer();
+
+  static Future<void> playTriggerFeedback() async {
+    try {
+      final wav = _cachedTriggerWav ??= _buildWav(_generateTriggerBeep());
+      if (!kIsWeb && Platform.isLinux) {
+        final file = File('${Directory.systemTemp.path}/hft_trigger.wav');
+        if (!file.existsSync()) await file.writeAsBytes(wav);
+        Process.run('paplay', [file.path]).catchError((_) => ProcessResult(0, 0, null, null));
+      } else {
+        await _triggerPlayer.stop();
+        await _triggerPlayer.play(BytesSource(wav));
+      }
+    } catch (_) {}
+  }
 
   static Future<void> playCompletionAlert() async {
     try {
@@ -26,17 +42,35 @@ class SoundPlayer {
     } catch (_) {}
   }
 
-  static List<int> _generateChime() {
-    final samples = <int>[];
-    for (var i = 0; i < 8; i++) {
-      final freq = i.isEven ? 880 : 1108;
-      samples.addAll(_squareWave(freq, durationMs: 180));
-      samples.addAll(_silence(durationMs: 80));
-    }
-    return samples;
+  static Uint8List _generateTriggerBeep() {
+    final a = _squareWave(1200, durationMs: 70);
+    final gap = _silence(durationMs: 40);
+    final c = _squareWave(1500, durationMs: 70);
+    final out = Uint8List(a.length + gap.length + c.length);
+    var off = 0;
+    out.setRange(off, off += a.length, a);
+    out.setRange(off, off += gap.length, gap);
+    out.setRange(off, off += c.length, c);
+    return out;
   }
 
-  static List<int> _squareWave(int freq, {required int durationMs}) {
+  static Uint8List _generateChime() {
+    // Each pitch is generated once and reused across the 8 alternating beats.
+    final even = _squareWave(880, durationMs: 180);
+    final odd  = _squareWave(1108, durationMs: 180);
+    final sil  = _silence(durationMs: 80);
+    final chunkLen = even.length + sil.length;
+    final out = Uint8List(chunkLen * 8);
+    var off = 0;
+    for (var i = 0; i < 8; i++) {
+      final wave = i.isEven ? even : odd;
+      out.setRange(off, off += wave.length, wave);
+      out.setRange(off, off += sil.length, sil);
+    }
+    return out;
+  }
+
+  static Uint8List _squareWave(int freq, {required int durationMs}) {
     const sampleRate = 44100;
     final n = sampleRate * durationMs ~/ 1000;
     final buf = ByteData(n * 2);
@@ -46,13 +80,13 @@ class SoundPlayer {
       final s = (raw * 32767 * env).round().clamp(-32768, 32767);
       buf.setInt16(i * 2, s, Endian.little);
     }
-    return buf.buffer.asUint8List().toList();
+    return buf.buffer.asUint8List();
   }
 
-  static List<int> _silence({required int durationMs}) =>
-      List.filled(44100 * durationMs ~/ 1000 * 2, 0);
+  static Uint8List _silence({required int durationMs}) =>
+      Uint8List(44100 * durationMs ~/ 1000 * 2);
 
-  static Uint8List _buildWav(List<int> pcm) {
+  static Uint8List _buildWav(Uint8List pcm) {
     final dataLen = pcm.length;
     final header = ByteData(44);
     void str(int offset, String s) {
@@ -76,8 +110,8 @@ class SoundPlayer {
     header.setUint32(40, dataLen, Endian.little);
 
     final out = Uint8List(44 + dataLen);
-    out.setAll(0, header.buffer.asUint8List());
-    out.setAll(44, pcm);
+    out.setRange(0, 44, header.buffer.asUint8List());
+    out.setRange(44, 44 + dataLen, pcm);
     return out;
   }
 }

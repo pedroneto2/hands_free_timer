@@ -22,8 +22,8 @@ class VoiceCommandDetector {
   static const String _kModelAsset =
       'assets/model/vosk-model-small-en-us-0.15.zip';
 
-  // Grammar limits Vosk to "ok time" only; [unk] absorbs non-matching speech.
-  static const List<String> _kGrammar = ['ok time', '[unk]'];
+  // Grammar limits Vosk to known commands; [unk] absorbs non-matching speech.
+  static const List<String> _kGrammar = ['ok time', 'ok reset', '[unk]'];
 
   static const Duration _kDetectionDebounce = Duration(seconds: 2);
 
@@ -41,6 +41,7 @@ class VoiceCommandDetector {
   DateTime? _lastDetection;
 
   void Function()? _onDetected;
+  void Function()? _onReset;
   void Function()? _onCalibrationDone;
   void Function(String)? _onError;
 
@@ -66,25 +67,31 @@ class VoiceCommandDetector {
   // ── Public API ─────────────────────────────────────────────────────────────
 
   void suppress(Duration duration) {
+    final newUntil = DateTime.now().add(duration);
+    final current = _suppressedUntil;
+    // Never shorten an active suppress window.
+    if (current != null && !newUntil.isAfter(current)) return;
+    _suppressedUntil = newUntil;
     if (_speechService != null) {
       // SpeechService path: use native pause/resume
       _suppressTimer?.cancel();
       _speechService!.setPause(paused: true);
       _suppressTimer = Timer(duration, () {
+        _suppressedUntil = null;
         if (!_stopped) _speechService?.setPause(paused: false);
       });
-    } else {
-      // Linux path: timestamp gate
-      _suppressedUntil = DateTime.now().add(duration);
     }
+    // Linux path: _suppressedUntil already updated above; _handleChunk reads it.
   }
 
   Future<void> start({
     required void Function() onDetected,
+    required void Function() onReset,
     required void Function() onCalibrationDone,
     required void Function(String) onError,
   }) async {
     _onDetected = onDetected;
+    _onReset = onReset;
     _onCalibrationDone = onCalibrationDone;
     _onError = onError;
     _stopped = false;
@@ -92,14 +99,24 @@ class VoiceCommandDetector {
 
     try {
       final loader = ModelLoader();
-      final modelPath = await loader.loadFromAssets(_kModelAsset);
-      _model = await VoskFlutterPlugin.instance().createModel(modelPath);
+      final modelPath = await loader.loadFromAssets(_kModelAsset)
+          .timeout(const Duration(seconds: 30));
+      _model = await VoskFlutterPlugin.instance().createModel(modelPath)
+          .timeout(const Duration(seconds: 20));
       _recognizer = await VoskFlutterPlugin.instance().createRecognizer(
         model: _model!,
         sampleRate: 16000,
         grammar: _kGrammar,
-      );
+      ).timeout(const Duration(seconds: 10));
     } catch (e) {
+      await _recognizer?.dispose();
+      _recognizer = null;
+      _model?.dispose();
+      _model = null;
+      _onDetected = null;
+      _onReset = null;
+      _onCalibrationDone = null;
+      _onError = null;
       onError(
         'Falha ao carregar modelo Vosk.\n'
         'Baixe vosk-model-small-en-us-0.15.zip e coloque em assets/model/\n'
@@ -125,6 +142,19 @@ class VoiceCommandDetector {
             _speechService!.onResult().listen(_handleSpeechServiceResult);
         await _speechService!.start();
       } catch (e) {
+        await _resultSub?.cancel();
+        _resultSub = null;
+        await _speechService?.stop();
+        await _speechService?.dispose();
+        _speechService = null;
+        await _recognizer?.dispose();
+        _recognizer = null;
+        _model?.dispose();
+        _model = null;
+        _onDetected = null;
+        _onReset = null;
+        _onCalibrationDone = null;
+        _onError = null;
         onError('Falha ao iniciar serviço de voz: $e');
         _isCalibrating = false;
         return;
@@ -138,6 +168,7 @@ class VoiceCommandDetector {
     _stopped = true;
     _suppressTimer?.cancel();
     _suppressTimer = null;
+    _suppressedUntil = null;
 
     // Android cleanup
     await _resultSub?.cancel();
@@ -163,6 +194,11 @@ class VoiceCommandDetector {
     _isCalibrating = false;
     _isDrainingQueue = false;
     _stopped = false;
+
+    _onDetected = null;
+    _onReset = null;
+    _onCalibrationDone = null;
+    _onError = null;
   }
 
   Future<void> dispose() => stop();
@@ -182,6 +218,7 @@ class VoiceCommandDetector {
       '--rate=16000',
       '--channels=1',
     ]);
+    _linuxProcess!.stderr.listen((_) {});
     _linuxSubscription =
         _linuxProcess!.stdout.listen((chunk) => _handleChunk(chunk));
   }
@@ -207,10 +244,14 @@ class VoiceCommandDetector {
       return;
     }
 
-    if (_suppressedUntil != null && now.isBefore(_suppressedUntil!)) {
-      _audioQueue.clear();
-      _wasAboveGate = false;
-      return;
+    final sup = _suppressedUntil;
+    if (sup != null) {
+      if (now.isBefore(sup)) {
+        _audioQueue.clear();
+        _wasAboveGate = false;
+        return;
+      }
+      _suppressedUntil = null;
     }
 
     final isAboveGate = rms >= _ambientBaseline * _kAmbientMultiplier;
@@ -244,16 +285,19 @@ class VoiceCommandDetector {
     while (_audioQueue.isNotEmpty && !_stopped && _recognizer != null) {
       final bytes = _audioQueue.removeFirst();
       try {
-        final accepted = await _recognizer!.acceptWaveformBytes(bytes);
-        if (_stopped) break;
+        final accepted = await _recognizer!.acceptWaveformBytes(bytes)
+            .timeout(const Duration(milliseconds: 500), onTimeout: () => false);
+        if (_stopped || _recognizer == null) break;
 
         if (accepted) {
-          final json = await _recognizer!.getResult();
-          if (_stopped) break;
+          final json = await _recognizer!.getResult()
+              .timeout(const Duration(milliseconds: 300), onTimeout: () => '{}');
+          if (_stopped || _recognizer == null) break;
           _checkResult(json, DateTime.now());
         } else {
-          final partial = await _recognizer!.getPartialResult();
-          if (_stopped) break;
+          final partial = await _recognizer!.getPartialResult()
+              .timeout(const Duration(milliseconds: 300), onTimeout: () => '{}');
+          if (_stopped || _recognizer == null) break;
           _checkResult(partial, DateTime.now());
         }
       } catch (e) {
@@ -269,6 +313,7 @@ class VoiceCommandDetector {
   // ── Shared ─────────────────────────────────────────────────────────────────
 
   void _checkResult(String json, DateTime now) {
+    if (json.isEmpty || json == '{}') return;
     try {
       final map = jsonDecode(json) as Map<String, dynamic>;
       // Final result uses "text"; partial result uses "partial".
@@ -282,6 +327,12 @@ class VoiceCommandDetector {
             now.difference(_lastDetection!) > _kDetectionDebounce) {
           _lastDetection = now;
           _onDetected?.call();
+        }
+      } else if (text.contains('ok') && text.contains('reset')) {
+        if (_lastDetection == null ||
+            now.difference(_lastDetection!) > _kDetectionDebounce) {
+          _lastDetection = now;
+          _onReset?.call();
         }
       }
     } catch (_) {}

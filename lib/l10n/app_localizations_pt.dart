@@ -91,6 +91,61 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get voiceBatteryHint => 'Consome mais bateria do que os outros modos';
+
+  @override
+  String get helpButton => 'Instruções';
+
+  @override
+  String get helpTitle => 'Como usar';
+
+  @override
+  String get helpTimerCircleTitle => 'Círculo do Temporizador';
+
+  @override
+  String get helpTimerCircleBody =>
+      'Toque no círculo do temporizador para abrir o painel de presets e escolher uma duração.';
+
+  @override
+  String get helpPresetsTitle => 'Presets';
+
+  @override
+  String get helpPresetsBody =>
+      'Escolha uma duração predefinida ou adicione uma personalizada. Toque em × para remover um preset.';
+
+  @override
+  String get helpControlsTitle => 'Controlos';
+
+  @override
+  String get helpControlsBody =>
+      'Prima Iniciar para começar, Pausar para pausar e Reiniciar para recomeçar o temporizador.';
+
+  @override
+  String get helpSoundTriggerTitle => 'Gatilho de Som';
+
+  @override
+  String get helpSoundTriggerBody =>
+      'Ative o microfone (ícone do microfone) para controlar o temporizador com sons. Qualquer/Assobio/Grito: um som detetado inicia ou pausa. Comando de Voz: diga \"Ok Time\" para iniciar/pausar e \"Ok Reset\" para reiniciar.';
+
+  @override
+  String get helpSensitivityTitle => 'Sensibilidade do Microfone';
+
+  @override
+  String get helpSensitivityBody =>
+      'Ajuste a sensibilidade do microfone. Baixa ignora ruídos de fundo; Alta reage a sons mais suaves. Não disponível no modo Comando de Voz.';
+
+  @override
+  String get helpScreenTitle => 'Brilho do Ecrã';
+
+  @override
+  String get helpScreenBody =>
+      'O ícone do sol/lua mantém o ecrã aceso enquanto o temporizador está ativo. Os gatilhos de som também restauram o brilho automaticamente.';
+
+  @override
+  String get helpLanguageTitle => 'Idioma e Tema';
+
+  @override
+  String get helpLanguageBody =>
+      'Toque no ícone de idioma para mudar o idioma da aplicação. Toque no ícone de contraste para alternar entre o tema claro e escuro.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -180,4 +235,59 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get voiceBatteryHint => 'Usa mais bateria que os outros modos';
+
+  @override
+  String get helpButton => 'Instruções';
+
+  @override
+  String get helpTitle => 'Como usar';
+
+  @override
+  String get helpTimerCircleTitle => 'Círculo do Timer';
+
+  @override
+  String get helpTimerCircleBody =>
+      'Toque no círculo do timer para abrir o painel de presets e escolher uma duração.';
+
+  @override
+  String get helpPresetsTitle => 'Presets';
+
+  @override
+  String get helpPresetsBody =>
+      'Escolha uma duração predefinida ou adicione uma personalizada. Toque em × para remover um preset.';
+
+  @override
+  String get helpControlsTitle => 'Controles';
+
+  @override
+  String get helpControlsBody =>
+      'Pressione Iniciar para começar, Pausar para pausar e Reiniciar para resetar o timer.';
+
+  @override
+  String get helpSoundTriggerTitle => 'Gatilho de Som';
+
+  @override
+  String get helpSoundTriggerBody =>
+      'Ative o microfone (ícone do microfone) para controlar o timer com sons. Qualquer/Assobio/Grito: um som detectado inicia ou pausa. Comando de Voz: diga \"Ok Time\" para iniciar/pausar e \"Ok Reset\" para reiniciar.';
+
+  @override
+  String get helpSensitivityTitle => 'Sensibilidade do Microfone';
+
+  @override
+  String get helpSensitivityBody =>
+      'Ajuste a sensibilidade do microfone. Baixa ignora ruídos de fundo; Alta reage a sons mais suaves. Não disponível no modo Comando de Voz.';
+
+  @override
+  String get helpScreenTitle => 'Brilho da Tela';
+
+  @override
+  String get helpScreenBody =>
+      'O ícone do sol/lua mantém a tela acesa enquanto o timer está ativo. Os gatilhos de som também restauram o brilho automaticamente.';
+
+  @override
+  String get helpLanguageTitle => 'Idioma e Tema';
+
+  @override
+  String get helpLanguageBody =>
+      'Toque no ícone de idioma para mudar o idioma do app. Toque no ícone de contraste para alternar entre o tema claro e escuro.';
 }

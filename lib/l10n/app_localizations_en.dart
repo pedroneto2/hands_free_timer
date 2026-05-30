@@ -91,4 +91,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get voiceBatteryHint => 'Uses more battery than other modes';
+
+  @override
+  String get helpButton => 'Instructions';
+
+  @override
+  String get helpTitle => 'How to use';
+
+  @override
+  String get helpTimerCircleTitle => 'Timer Circle';
+
+  @override
+  String get helpTimerCircleBody =>
+      'Tap the timer circle to open the preset panel and choose a duration.';
+
+  @override
+  String get helpPresetsTitle => 'Presets';
+
+  @override
+  String get helpPresetsBody =>
+      'Choose a preset duration or add a custom one. Tap × to remove a preset.';
+
+  @override
+  String get helpControlsTitle => 'Controls';
+
+  @override
+  String get helpControlsBody =>
+      'Press Start to begin, Pause to pause, and Restart to reset the timer.';
+
+  @override
+  String get helpSoundTriggerTitle => 'Sound Trigger';
+
+  @override
+  String get helpSoundTriggerBody =>
+      'Enable the mic (mic icon) to let sounds control the timer. Any/Whistle/Yell: a detected sound starts or pauses. Voice Cmd: say \"Ok Time\" to start/pause and \"Ok Reset\" to reset.';
+
+  @override
+  String get helpSensitivityTitle => 'Mic Sensitivity';
+
+  @override
+  String get helpSensitivityBody =>
+      'Adjust how sensitive the mic is to sound. Low ignores background noise; High reacts to quieter sounds. Not available in Voice Cmd mode.';
+
+  @override
+  String get helpScreenTitle => 'Screen Brightness';
+
+  @override
+  String get helpScreenBody =>
+      'The sun/moon icon keeps the screen on while the timer is active. Sound triggers also restore screen brightness automatically.';
+
+  @override
+  String get helpLanguageTitle => 'Language & Theme';
+
+  @override
+  String get helpLanguageBody =>
+      'Tap the language icon to change the app language. Tap the contrast icon to toggle between light and dark theme.';
 }

@@ -91,4 +91,54 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get voiceBatteryHint => '比其他模式更耗电';
+
+  @override
+  String get helpButton => '说明';
+
+  @override
+  String get helpTitle => '使用方法';
+
+  @override
+  String get helpTimerCircleTitle => '计时器圆圈';
+
+  @override
+  String get helpTimerCircleBody => '点击计时器圆圈可打开预设面板并选择时长。';
+
+  @override
+  String get helpPresetsTitle => '预设';
+
+  @override
+  String get helpPresetsBody => '选择预设时长或添加自定义时长。点击 × 删除预设。';
+
+  @override
+  String get helpControlsTitle => '控制';
+
+  @override
+  String get helpControlsBody => '按开始键开始计时，按暂停键暂停，按重新开始键重置计时器。';
+
+  @override
+  String get helpSoundTriggerTitle => '声音触发';
+
+  @override
+  String get helpSoundTriggerBody =>
+      '启用麦克风（麦克风图标）以通过声音控制计时器。任意/哨声/呼喊：检测到声音后开始或暂停。语音指令：说\"Ok Time\"开始/暂停，说\"Ok Reset\"重置。';
+
+  @override
+  String get helpSensitivityTitle => '麦克风灵敏度';
+
+  @override
+  String get helpSensitivityBody =>
+      '调整麦克风灵敏度。低灵敏度忽略背景噪音；高灵敏度对较小声音作出响应。语音指令模式下不可用。';
+
+  @override
+  String get helpScreenTitle => '屏幕亮度';
+
+  @override
+  String get helpScreenBody => '太阳/月亮图标可在计时器运行时保持屏幕常亮。声音触发时也会自动恢复屏幕亮度。';
+
+  @override
+  String get helpLanguageTitle => '语言和主题';
+
+  @override
+  String get helpLanguageBody => '点击语言图标更改应用语言。点击对比度图标在亮色和暗色主题之间切换。';
 }

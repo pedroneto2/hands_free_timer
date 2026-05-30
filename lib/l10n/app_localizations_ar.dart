@@ -91,4 +91,59 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get voiceBatteryHint => 'يستهلك بطارية أكثر من الأوضاع الأخرى';
+
+  @override
+  String get helpButton => 'تعليمات';
+
+  @override
+  String get helpTitle => 'كيفية الاستخدام';
+
+  @override
+  String get helpTimerCircleTitle => 'دائرة المؤقت';
+
+  @override
+  String get helpTimerCircleBody =>
+      'انقر على دائرة المؤقت لفتح لوحة الإعدادات المسبقة واختيار مدة.';
+
+  @override
+  String get helpPresetsTitle => 'الإعدادات المسبقة';
+
+  @override
+  String get helpPresetsBody =>
+      'اختر مدة محددة مسبقاً أو أضف مدة مخصصة. انقر × لحذف إعداد مسبق.';
+
+  @override
+  String get helpControlsTitle => 'أدوات التحكم';
+
+  @override
+  String get helpControlsBody =>
+      'اضغط ابدأ للبدء، وإيقاف مؤقت للتوقف، وإعادة التشغيل لإعادة ضبط المؤقت.';
+
+  @override
+  String get helpSoundTriggerTitle => 'محفّز الصوت';
+
+  @override
+  String get helpSoundTriggerBody =>
+      'فعّل الميكروفون (أيقونة الميكروفون) للتحكم في المؤقت بالصوت. أي/صفير/صراخ: الصوت المكتشف يبدأ أو يوقف مؤقتاً. الأمر الصوتي: قل \"Ok Time\" للبدء/الإيقاف المؤقت و\"Ok Reset\" لإعادة الضبط.';
+
+  @override
+  String get helpSensitivityTitle => 'حساسية الميكروفون';
+
+  @override
+  String get helpSensitivityBody =>
+      'اضبط حساسية الميكروفون. منخفضة تتجاهل الضوضاء الخلفية؛ عالية تستجيب للأصوات الهادئة. غير متاح في وضع الأمر الصوتي.';
+
+  @override
+  String get helpScreenTitle => 'سطوع الشاشة';
+
+  @override
+  String get helpScreenBody =>
+      'أيقونة الشمس/القمر تبقي الشاشة مضاءة أثناء تشغيل المؤقت. محفّزات الصوت تستعيد السطوع تلقائياً.';
+
+  @override
+  String get helpLanguageTitle => 'اللغة والسمة';
+
+  @override
+  String get helpLanguageBody =>
+      'انقر على أيقونة اللغة لتغيير لغة التطبيق. انقر على أيقونة التباين للتبديل بين السمة الفاتحة والداكنة.';
 }

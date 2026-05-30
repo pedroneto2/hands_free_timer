@@ -27,5 +27,21 @@
   "soundModeYell": "Grito",
   "soundModeVoice": "Comando de Voz (Ok Time)",
   "voiceCalibrating": "Iniciando reconhecimento de voz...",
-  "voiceBatteryHint": "Usa mais bateria que os outros modos"
+  "voiceBatteryHint": "Usa mais bateria que os outros modos",
+  "helpButton": "Instruções",
+  "helpTitle": "Como usar",
+  "helpTimerCircleTitle": "Círculo do Timer",
+  "helpTimerCircleBody": "Toque no círculo do timer para abrir o painel de presets e escolher uma duração.",
+  "helpPresetsTitle": "Presets",
+  "helpPresetsBody": "Escolha uma duração predefinida ou adicione uma personalizada. Toque em × para remover um preset.",
+  "helpControlsTitle": "Controles",
+  "helpControlsBody": "Pressione Iniciar para começar, Pausar para pausar e Reiniciar para resetar o timer.",
+  "helpSoundTriggerTitle": "Gatilho de Som",
+  "helpSoundTriggerBody": "Ative o microfone (ícone do microfone) para controlar o timer com sons. Qualquer/Assobio/Grito: um som detectado inicia ou pausa. Comando de Voz: diga \"Ok Time\" para iniciar/pausar e \"Ok Reset\" para reiniciar.",
+  "helpSensitivityTitle": "Sensibilidade do Microfone",
+  "helpSensitivityBody": "Ajuste a sensibilidade do microfone. Baixa ignora ruídos de fundo; Alta reage a sons mais suaves. Não disponível no modo Comando de Voz.",
+  "helpScreenTitle": "Brilho da Tela",
+  "helpScreenBody": "O ícone do sol/lua mantém a tela acesa enquanto o timer está ativo. Os gatilhos de som também restauram o brilho automaticamente.",
+  "helpLanguageTitle": "Idioma e Tema",
+  "helpLanguageBody": "Toque no ícone de idioma para mudar o idioma do app. Toque no ícone de contraste para alternar entre o tema claro e escuro."
 }

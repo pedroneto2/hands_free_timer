@@ -15,33 +15,42 @@ class BannerAdWidget extends StatefulWidget {
 class _BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? _ad;
   bool _loaded = false;
+  bool _isLoading = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (_ad == null && isMobilePlatform) {
+    if (_ad == null && !_isLoading && isMobilePlatform) {
       _loadAd();
     }
   }
 
   Future<void> _loadAd() async {
+    _isLoading = true;
     final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
       MediaQuery.sizeOf(context).width.truncate(),
     );
-    if (size == null || !mounted) return;
+    if (size == null || !mounted) {
+      _isLoading = false;
+      return;
+    }
 
     _ad = BannerAd(
       adUnitId: _adUnitId,
       size: size,
       request: const AdRequest(),
       listener: BannerAdListener(
-        onAdLoaded: (_) => setState(() => _loaded = true),
+        onAdLoaded: (_) {
+          if (mounted) setState(() => _loaded = true);
+        },
         onAdFailedToLoad: (ad, _) {
           ad.dispose();
           _ad = null;
+          _isLoading = false;
         },
       ),
     )..load();
+    _isLoading = false;
   }
 
   @override

@@ -282,6 +282,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Uses more battery than other modes'**
   String get voiceBatteryHint;
+
+  /// No description provided for @helpButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructions'**
+  String get helpButton;
+
+  /// No description provided for @helpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to use'**
+  String get helpTitle;
+
+  /// No description provided for @helpTimerCircleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer Circle'**
+  String get helpTimerCircleTitle;
+
+  /// No description provided for @helpTimerCircleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the timer circle to open the preset panel and choose a duration.'**
+  String get helpTimerCircleBody;
+
+  /// No description provided for @helpPresetsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Presets'**
+  String get helpPresetsTitle;
+
+  /// No description provided for @helpPresetsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a preset duration or add a custom one. Tap × to remove a preset.'**
+  String get helpPresetsBody;
+
+  /// No description provided for @helpControlsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Controls'**
+  String get helpControlsTitle;
+
+  /// No description provided for @helpControlsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Press Start to begin, Pause to pause, and Restart to reset the timer.'**
+  String get helpControlsBody;
+
+  /// No description provided for @helpSoundTriggerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound Trigger'**
+  String get helpSoundTriggerTitle;
+
+  /// No description provided for @helpSoundTriggerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable the mic (mic icon) to let sounds control the timer. Any/Whistle/Yell: a detected sound starts or pauses. Voice Cmd: say \"Ok Time\" to start/pause and \"Ok Reset\" to reset.'**
+  String get helpSoundTriggerBody;
+
+  /// No description provided for @helpSensitivityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mic Sensitivity'**
+  String get helpSensitivityTitle;
+
+  /// No description provided for @helpSensitivityBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust how sensitive the mic is to sound. Low ignores background noise; High reacts to quieter sounds. Not available in Voice Cmd mode.'**
+  String get helpSensitivityBody;
+
+  /// No description provided for @helpScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen Brightness'**
+  String get helpScreenTitle;
+
+  /// No description provided for @helpScreenBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The sun/moon icon keeps the screen on while the timer is active. Sound triggers also restore screen brightness automatically.'**
+  String get helpScreenBody;
+
+  /// No description provided for @helpLanguageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Language & Theme'**
+  String get helpLanguageTitle;
+
+  /// No description provided for @helpLanguageBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the language icon to change the app language. Tap the contrast icon to toggle between light and dark theme.'**
+  String get helpLanguageBody;
 }
 
 class _AppLocalizationsDelegate

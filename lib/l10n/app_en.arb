@@ -27,5 +27,21 @@
   "soundModeYell": "Yell",
   "soundModeVoice": "Voice Cmd (Ok Time)",
   "voiceCalibrating": "Starting voice recognition...",
-  "voiceBatteryHint": "Uses more battery than other modes"
+  "voiceBatteryHint": "Uses more battery than other modes",
+  "helpButton": "Instructions",
+  "helpTitle": "How to use",
+  "helpTimerCircleTitle": "Timer Circle",
+  "helpTimerCircleBody": "Tap the timer circle to open the preset panel and choose a duration.",
+  "helpPresetsTitle": "Presets",
+  "helpPresetsBody": "Choose a preset duration or add a custom one. Tap × to remove a preset.",
+  "helpControlsTitle": "Controls",
+  "helpControlsBody": "Press Start to begin, Pause to pause, and Restart to reset the timer.",
+  "helpSoundTriggerTitle": "Sound Trigger",
+  "helpSoundTriggerBody": "Enable the mic (mic icon) to let sounds control the timer. Any/Whistle/Yell: a detected sound starts or pauses. Voice Cmd: say \"Ok Time\" to start/pause and \"Ok Reset\" to reset.",
+  "helpSensitivityTitle": "Mic Sensitivity",
+  "helpSensitivityBody": "Adjust how sensitive the mic is to sound. Low ignores background noise; High reacts to quieter sounds. Not available in Voice Cmd mode.",
+  "helpScreenTitle": "Screen Brightness",
+  "helpScreenBody": "The sun/moon icon keeps the screen on while the timer is active. Sound triggers also restore screen brightness automatically.",
+  "helpLanguageTitle": "Language & Theme",
+  "helpLanguageBody": "Tap the language icon to change the app language. Tap the contrast icon to toggle between light and dark theme."
 }

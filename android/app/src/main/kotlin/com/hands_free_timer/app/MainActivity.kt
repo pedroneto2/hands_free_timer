@@ -50,17 +50,25 @@ class MainActivity : FlutterActivity() {
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "hands_free_timer/screen")
             .setMethodCallHandler { call, result ->
-                if (call.method == "setKeepBright") {
-                    keepBright = call.arguments as Boolean
-                    if (keepBright) {
-                        handler.removeCallbacks(dimRunnable)
-                        setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
-                    } else {
-                        scheduleDim()
+                when (call.method) {
+                    "setKeepBright" -> {
+                        keepBright = call.arguments as Boolean
+                        if (keepBright) {
+                            handler.removeCallbacks(dimRunnable)
+                            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
+                        } else {
+                            scheduleDim()
+                        }
+                        result.success(null)
                     }
-                    result.success(null)
-                } else {
-                    result.notImplemented()
+                    "wakeScreen" -> {
+                        if (!keepBright) {
+                            setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE)
+                            scheduleDim()
+                        }
+                        result.success(null)
+                    }
+                    else -> result.notImplemented()
                 }
             }
     }
